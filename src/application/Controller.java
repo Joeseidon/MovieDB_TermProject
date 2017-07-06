@@ -20,7 +20,9 @@ import javafx.scene.web.WebView;
 
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
-
+/*
+ * @author Josh Winfrey
+ */
 public class Controller implements Initializable {
 
 	@FXML
@@ -111,6 +113,22 @@ public class Controller implements Initializable {
 	
 	public void TrailerSelected(ActionEvent event){
 		selected.generateTrailerWindow(webview);
+	}
+	
+	public void RandomMovie(ActionEvent event){
+		
+	}
+	
+	public void SearchMovie(ActionEvent event){
+		
+	}
+	
+	public void AddMovie(ActionEvent event){
+		
+	}
+	
+	public void RemoveMovie(ActionEvent event){
+		
 	}
 	
 	private void generateFavandWatchlist(){

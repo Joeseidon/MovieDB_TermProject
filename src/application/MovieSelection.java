@@ -4,7 +4,7 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 import javafx.scene.Scene;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -79,7 +79,11 @@ public class MovieSelection {
 
 		Stage stage = new Stage();
 
-		FlowPane root2 = new FlowPane();
+		AnchorPane root2 = new AnchorPane();
+		root2.setBottomAnchor(webview, 0.0);
+		root2.setTopAnchor(webview, 0.0);
+		root2.setLeftAnchor(webview, 0.0);
+		root2.setRightAnchor(webview, 0.0);
 		root2.getChildren().add(webview);
 
 		stage.setTitle("TrailerWindow");

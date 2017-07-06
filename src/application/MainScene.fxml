@@ -12,31 +12,28 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="108.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" />
-      <Button fx:id="RandomButton" layoutX="140.0" layoutY="700.0" mnemonicParsing="false" text="Random">
+      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="126.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" />
+      <Button fx:id="RandomButton" layoutX="140.0" layoutY="700.0" mnemonicParsing="false" onAction="#RandomMovie" text="Random">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="AddButton" layoutX="478.0" layoutY="384.0" mnemonicParsing="false" text="Add">
+      <Button fx:id="AddButton" layoutX="478.0" layoutY="384.0" mnemonicParsing="false" onAction="#AddMovie" text="Add">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="RemoveButton" layoutX="478.0" layoutY="434.0" mnemonicParsing="false" text="Remove">
+      <Button fx:id="RemoveButton" layoutX="478.0" layoutY="434.0" mnemonicParsing="false" onAction="#RemoveMovie" text="Remove">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="SearchButton" layoutX="615.0" layoutY="24.0" mnemonicParsing="false" text="Search">
+      <Button fx:id="SearchButton" layoutX="615.0" layoutY="24.0" mnemonicParsing="false" onAction="#SearchMovie" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../ImageTest.jpg" />
-         </image></ImageView>
+      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
       <CheckBox fx:id="FavoriteCheckBox" layoutX="479.0" layoutY="315.0" mnemonicParsing="false" text="Favorite List">
          <font>
             <Font size="18.0" />
@@ -54,7 +51,7 @@
          <font>
             <Font name="Arabic Typesetting" size="30.0" />
          </font></TextField>
-      <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="411.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" />
+      <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" />
       <Label layoutX="156.0" layoutY="24.0" text="User Name" />
       <TextField fx:id="SearchField" layoutX="710.0" layoutY="24.0" prefHeight="39.0" prefWidth="371.0">
          <font>
@@ -65,8 +62,8 @@
          <font>
             <Font size="20.0" />
          </font></TextArea>
-      <Label layoutX="154.0" layoutY="91.0" text="Favorite List" />
-      <Label layoutX="159.0" layoutY="394.0" text="Watch List" />
+      <Label layoutX="154.0" layoutY="109.0" text="Favorite List" />
+      <Label layoutX="159.0" layoutY="404.0" text="Watch List" />
       <TextField fx:id="TitleField" layoutX="607.0" layoutY="115.0" prefHeight="39.0" prefWidth="504.0">
          <font>
             <Font size="18.0" />
