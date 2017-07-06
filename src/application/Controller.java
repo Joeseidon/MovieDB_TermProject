@@ -3,26 +3,19 @@ package application;
 import java.net.URL;
 import java.util.*;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 
 import info.movito.themoviedbapi.model.MovieDb;
@@ -75,16 +68,53 @@ public class Controller implements Initializable {
 	@FXML
 	private TextArea DescriptionField;
 	
+	private MovieDBAccount user;
+	private MovieSelection selected;
+	private SearchModule searchEngine;
+	
+	private WebView webview;
+	
+	
 	private Hashtable<String, MovieDb> watchList = new Hashtable<String, MovieDb>();
 	private Hashtable<String, MovieDb> favoriteList = new Hashtable<String, MovieDb>();
-	private String youTubeBaseURL = "https://www.youtube.com/watch?v=";
-	private String baseImageURL = "https://image.tmdb.org/t/p/w500";
-	private MovieDb cur;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		MovieDBAccount user = new MovieDBAccount();
-	    ObservableList<String> watchdata = FXCollections.observableArrayList();
+		
+		user = new MovieDBAccount();
+		UsernameField.appendText(user.getUserName());
+		selected = new MovieSelection(user);
+		searchEngine = new SearchModule(user.getTmdbApi());
+		
+		webview = new WebView();
+		generateFavandWatchlist();		
+	}
+	
+	public void SelectedMovieFromWatchList(MouseEvent event){
+		selected.setSelectedMovie(watchList.get(WatchList.getSelectionModel().getSelectedItem()));
+		Image img = new Image(selected.getImageURL());
+		ImageField.setImage(img);
+		
+		DescriptionField.clear();
+		DescriptionField.appendText(selected.getSelectedMovie().getOverview());
+		
+	}
+	
+	public void SelectedMovieFromFavoriteList(MouseEvent event){
+		selected.setSelectedMovie(favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem()));
+		Image img = new Image(selected.getImageURL());
+		ImageField.setImage(img);
+		
+		DescriptionField.clear();
+		DescriptionField.appendText(selected.getSelectedMovie().getOverview());
+	}
+	
+	public void TrailerSelected(ActionEvent event){
+		selected.generateTrailerWindow(webview);
+	}
+	
+	private void generateFavandWatchlist(){
+		ObservableList<String> watchdata = FXCollections.observableArrayList();
 	    ObservableList<String> favoritedata = FXCollections.observableArrayList();
 		
 		MovieResultsPage watchlist = user.getWatchList();
@@ -106,37 +136,5 @@ public class Controller implements Initializable {
 		}
 		
 		FavoriteList.setItems(favoritedata);
-		// To do on initialization
-		
-	}
-	
-	public void SelectedMovieFromWatchList(MouseEvent event){
-		cur = watchList.get(WatchList.getSelectionModel().getSelectedItem());
-		Image img = new Image(baseImageURL+watchList.get(WatchList.getSelectionModel().getSelectedItem()).getPosterPath());
-		ImageField.setImage(img);
-		//System.out.println(WatchList.getSelectionModel().getSelectedItem());
-	}
-	
-	public void SelectedMovieFromFavoriteList(MouseEvent event){
-		cur = favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem());
-		Image img = new Image(baseImageURL+favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem()).getPosterPath());
-		ImageField.setImage(img);
-		//System.out.println(FavoriteList.getSelectionModel().getSelectedItem());
-	}
-	
-	public void TrailerSelected(ActionEvent event){
-		//TrailerField.getEngine().load(user.getVideoURL);
-		Stage stage = new Stage();
-		AnchorPane root2 = new AnchorPane();
-		AnchorPane.setBottomAnchor(TrailerField, 5.0);
-		AnchorPane.setTopAnchor(TrailerField, 5.0);
-		AnchorPane.setLeftAnchor(TrailerField, 5.0);
-		AnchorPane.setRightAnchor(TrailerField, 5.0);
-		root2.getChildren().add(TrailerField);
-		
-		stage.setTitle("Trailer");
-		Scene Trailer = new Scene(root2, 1000, 700);
-		stage.setScene(Trailer);
-		stage.show();
 	}
 }

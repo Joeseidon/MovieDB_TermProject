@@ -38,6 +38,10 @@ public class MovieDBAccount {
 		//moved functionality to new class
 		//tmdbSearch = tmdbApi.getSearch();
 	}
+	
+	public String getUserName(){
+		return act.getName();
+	}
 
 	
 	/*
