@@ -75,11 +75,12 @@ public class TmdbRandomizer {
 			//will need to wait and generate pool
 			try {
 				Thread.sleep(400);
+				moviePool = createPoolWithoutUserData();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			moviePool = createPoolWithoutUserData();
+			
 			//throw new UserDataExemptException("Error in connection");
 		}
 		

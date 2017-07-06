@@ -58,6 +58,21 @@ public class MovieDBAccount {
 	public ResponseStatus removeMovieFromWatchlist(MovieDb mToRemove) {
 		return tmdbAccount.removeFromWatchList(sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
 	}
+	
+	/*
+	 * 
+	 * @author Joseph
+	 */
+	public ResponseStatus addMovieToFavorites(MovieDb mToAdd) {
+		return tmdbAccount.addFavorite(sessionToken, actId, mToAdd.getId(), MediaType.MOVIE);
+	}
+
+	/*
+	 * @author Joseph
+	 */
+	public ResponseStatus removeMovieFromFavorites(MovieDb mToRemove) {
+		return tmdbAccount.removeFavorite(sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
+	}
 
 	/*
 	 * @author Joseph
