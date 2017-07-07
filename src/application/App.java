@@ -14,7 +14,7 @@ public class App extends Application{
 			// Read file fxml and draw interface.
 			Parent root = FXMLLoader.load(getClass().getResource("/application/MainScene.fxml"));
 			
-			primaryStage.setTitle("Test Application");
+			primaryStage.setTitle("Movie Manager");
 			primaryStage.setScene(new Scene(root));
 			//primaryStage.setFullScreen(true);
 			primaryStage.show();
