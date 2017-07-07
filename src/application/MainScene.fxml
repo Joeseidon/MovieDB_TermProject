@@ -33,10 +33,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../Homework/CIS%20350/JavaFXTest/ImageTest.jpg" />
-         </image></ImageView>
+      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
       <CheckBox fx:id="FavoriteCheckBox" layoutX="479.0" layoutY="315.0" mnemonicParsing="false" text="Favorite List">
          <font>
             <Font size="18.0" />

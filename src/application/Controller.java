@@ -176,17 +176,25 @@ public class Controller implements Initializable {
 	private void addMovieToWatchlist(){
 		user.addMovieToWatchlist(selected.getSelectedMovie());
 		watchList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
+		generateFavandWatchlist();
 		//TODO: add to list view
 	}
 	private void addMovieToFavorites(){
 		user.addMovieToFavorites(selected.getSelectedMovie());
 		favoriteList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
+		generateFavandWatchlist();
 		//TODO: add to list view 
 	}
 	private void removeItemFromWatchList(){
+		user.removeMovieFromWatchlist(selected.getSelectedMovie());
+		watchList.remove(selected.getSelectedMovie());
+		generateFavandWatchlist();
 		//TODO: add functionality
 	}
 	private void removeItemFromFavorites(){
+		user.removeMovieFromFavorites(selected.getSelectedMovie());
+		favoriteList.remove(selected.getSelectedMovie());
+		generateFavandWatchlist();
 		//TODO add functionality 
 	}
 

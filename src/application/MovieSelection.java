@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 /*
  * @author Joseph
@@ -91,6 +93,13 @@ public class MovieSelection {
 		stage.setScene(Trailer);
 		stage.centerOnScreen();
 		stage.show();
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			
+			@Override
+			public void handle(WindowEvent event){
+				webview.getEngine().load(null);
+			}
+		});
 	}
 	
 	/*
