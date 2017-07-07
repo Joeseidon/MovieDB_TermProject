@@ -12,8 +12,8 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="126.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" />
-      <Button fx:id="RandomButton" layoutX="140.0" layoutY="700.0" mnemonicParsing="false" onAction="#RandomMovie" text="Random">
+      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="125.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" />
+      <Button fx:id="RandomButton" layoutX="143.0" layoutY="699.0" mnemonicParsing="false" onAction="#RandomMovie" text="Random">
          <font>
             <Font size="18.0" />
          </font>
@@ -28,12 +28,15 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="SearchButton" layoutX="615.0" layoutY="24.0" mnemonicParsing="false" onAction="#SearchMovie" text="Search">
+      <Button fx:id="SearchButton" layoutX="613.0" layoutY="13.0" mnemonicParsing="false" onAction="#SearchMovie" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Homework/CIS%20350/JavaFXTest/ImageTest.jpg" />
+         </image></ImageView>
       <CheckBox fx:id="FavoriteCheckBox" layoutX="479.0" layoutY="315.0" mnemonicParsing="false" text="Favorite List">
          <font>
             <Font size="18.0" />
@@ -53,28 +56,35 @@
          </font></TextField>
       <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" />
       <Label layoutX="156.0" layoutY="24.0" text="User Name" />
-      <TextField fx:id="SearchField" layoutX="710.0" layoutY="24.0" prefHeight="39.0" prefWidth="371.0">
+      <TextField fx:id="SearchField" layoutX="708.0" layoutY="13.0" prefHeight="39.0" prefWidth="371.0">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextArea fx:id="DescriptionField" layoutX="397.0" layoutY="603.0" prefHeight="136.0" prefWidth="922.0" wrapText="true">
+      <TextArea fx:id="DescriptionField" layoutX="398.0" layoutY="602.0" prefHeight="136.0" prefWidth="922.0" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
-      <Label layoutX="154.0" layoutY="109.0" text="Favorite List" />
+      <Label layoutX="154.0" layoutY="108.0" text="Favorite List" />
       <Label layoutX="159.0" layoutY="404.0" text="Watch List" />
-      <TextField fx:id="TitleField" layoutX="607.0" layoutY="115.0" prefHeight="39.0" prefWidth="504.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextField>
-      <Separator layoutX="366.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="771.0" prefWidth="8.0" />
-      <Separator layoutX="367.0" layoutY="73.0" prefHeight="17.0" prefWidth="1008.0" />
+      <Separator layoutX="367.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="771.0" prefWidth="7.0" />
+      <Separator layoutX="367.0" layoutY="161.0" prefHeight="17.0" prefWidth="1008.0" />
       <Button fx:id="TrailerButton" layoutX="478.0" layoutY="484.0" mnemonicParsing="false" onAction="#TrailerSelected" text="Trailer">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <ListView fx:id="SearchList" layoutX="612.0" layoutY="58.0" prefHeight="101.0" prefWidth="466.0" />
+      <Label fx:id="MovieTitle" layoutX="845.0" layoutY="582.0" text="Label" />
+      <CheckBox fx:id="TitleCheck" layoutX="470.0" layoutY="24.0" mnemonicParsing="false" text="Title">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="KeyWordCheck" layoutX="470.0" layoutY="58.0" mnemonicParsing="false" text="KeyWord">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
    </children>
 </AnchorPane>

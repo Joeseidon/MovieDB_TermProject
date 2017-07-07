@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -48,6 +49,9 @@ public class Controller implements Initializable {
 
 	@FXML
 	private ListView<String> WatchList;
+	
+	@FXML
+	private ListView<String> SearchList;
 
 	@FXML
 	private ImageView ImageField;
@@ -57,6 +61,12 @@ public class Controller implements Initializable {
 
 	@FXML
 	private CheckBox FavoriteCheckBox;
+	
+	@FXML
+	private CheckBox TitleCheck;
+	
+	@FXML
+	private CheckBox KeyWordCheck;
 
 	@FXML
 	private CheckBox WatchCheckBox;
@@ -65,13 +75,13 @@ public class Controller implements Initializable {
 	private TextField UsernameField;
 
 	@FXML
-	private TextField TitleField;
-
-	@FXML
 	private TextField SearchField;
 
 	@FXML
 	private TextArea DescriptionField;
+	
+	@FXML
+	private Label MovieTitle;
 
 	private MovieDBAccount user;
 	private MovieSelection selected;
