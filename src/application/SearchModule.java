@@ -37,8 +37,8 @@ public class SearchModule extends TmdbSearch {
 	 * 
 	 * @author Joseph
 	 */
-	public MultiListResultsPage searchByKeyword(String keywordSearchString) {
-		return super.searchMulti(keywordSearchString, "English", 2);
+	public MultiListResultsPage searchByKeyword(String keywordSearchString,int pages) {
+		return super.searchMulti(keywordSearchString, "English", pages);
 	}
 
 

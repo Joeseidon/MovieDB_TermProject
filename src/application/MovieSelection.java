@@ -82,10 +82,10 @@ public class MovieSelection {
 		Stage stage = new Stage();
 
 		AnchorPane root2 = new AnchorPane();
-		root2.setBottomAnchor(webview, 0.0);
-		root2.setTopAnchor(webview, 0.0);
-		root2.setLeftAnchor(webview, 0.0);
-		root2.setRightAnchor(webview, 0.0);
+		AnchorPane.setBottomAnchor(webview, 0.0);
+		AnchorPane.setTopAnchor(webview, 0.0);
+		AnchorPane.setLeftAnchor(webview, 0.0);
+		AnchorPane.setRightAnchor(webview, 0.0);
 		root2.getChildren().add(webview);
 
 		stage.setTitle("TrailerWindow");

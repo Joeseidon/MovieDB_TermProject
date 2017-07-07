@@ -71,14 +71,14 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="SearchList" layoutX="612.0" layoutY="58.0" prefHeight="101.0" prefWidth="466.0" />
+      <ListView fx:id="SearchList" layoutX="612.0" layoutY="58.0" onMouseClicked="#SelectedMovieFromSearchList" prefHeight="101.0" prefWidth="466.0" />
       <Label fx:id="MovieTitle" layoutX="845.0" layoutY="582.0" text="Label" />
       <CheckBox fx:id="TitleCheck" layoutX="470.0" layoutY="24.0" mnemonicParsing="false" text="Title">
          <font>
             <Font size="18.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="KeyWordCheck" layoutX="470.0" layoutY="58.0" mnemonicParsing="false" text="KeyWord">
+      <CheckBox fx:id="KeyWordCheck" layoutX="470.0" layoutY="58.0" mnemonicParsing="false" text="Keyword">
          <font>
             <Font size="18.0" />
          </font>

@@ -20,8 +20,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
-
+import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
+import info.movito.themoviedbapi.model.Multi.MediaType;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /*
@@ -92,6 +94,7 @@ public class Controller implements Initializable {
 
 	private Hashtable<String, MovieDb> watchList = new Hashtable<String, MovieDb>();
 	private Hashtable<String, MovieDb> favoriteList = new Hashtable<String, MovieDb>();
+	private Hashtable<String, MovieDb> searchList = new Hashtable<String, MovieDb>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -109,20 +112,26 @@ public class Controller implements Initializable {
 	
 	public void SelectedMovieFromWatchList(MouseEvent event) {
 		selected.setSelectedMovie(watchList.get(WatchList.getSelectionModel().getSelectedItem()));
-		Image img = new Image(selected.getImageURL());
-		ImageField.setImage(img);
-
-		DescriptionField.clear();
-		DescriptionField.appendText(selected.getSelectedMovie().getOverview());
+		displaySelectedMovie();
 	}
 
 	public void SelectedMovieFromFavoriteList(MouseEvent event) {
 		selected.setSelectedMovie(favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem()));
+		displaySelectedMovie();
+	}
+	
+	public void SelectedMovieFromSearchList(MouseEvent event){
+		selected.setSelectedMovie(searchList.get(SearchList.getSelectionModel().getSelectedItem()));
+		displaySelectedMovie();
+	}
+	
+	private void displaySelectedMovie(){
 		Image img = new Image(selected.getImageURL());
 		ImageField.setImage(img);
 
+		MovieTitle.setText("Title: "+selected.getSelectedMovie().getTitle());
 		DescriptionField.clear();
-		DescriptionField.appendText(selected.getSelectedMovie().getOverview());
+		DescriptionField.appendText("Movie Description: "+selected.getSelectedMovie().getOverview());
 	}
 
 	public void TrailerSelected(ActionEvent event) {
@@ -148,11 +157,49 @@ public class Controller implements Initializable {
 	}
 
 	public void SearchMovie(ActionEvent event) {
-		//TODO: Checkboxs: keywords or title 
-		//TODO: results listview on GUI
-		
-		
+		if(TitleCheck.isSelected() && !KeyWordCheck.isSelected()){
+			searchResultsToDisplay(
+					searchEngine.searchByMovieTitle(SearchField.getText(), false, 2)
+					);
+		}else if(KeyWordCheck.isSelected() && !TitleCheck.isSelected()){
+			searchResultsToDisplay(
+					searchEngine.searchByKeyword(SearchField.getText(),2)
+					);
+		}else{
+			JOptionPane.showMessageDialog(null, "Please select either Title or Keyword");
+		}
 	}
+	
+	private void searchResultsToDisplay(MovieResultsPage mr){
+		ObservableList<String> searchData = FXCollections.observableArrayList();
+				
+		Iterator<MovieDb> iteratorW = mr.iterator();
+		
+		while (iteratorW.hasNext()) {
+			MovieDb movie = iteratorW.next();
+			searchData.add(movie.toString());
+			searchList.put(movie.toString(), movie);
+		}
+
+		SearchList.setItems(searchData);
+	}
+	
+	private void searchResultsToDisplay(MultiListResultsPage TvandMv){
+		ObservableList<String> searchData = FXCollections.observableArrayList();
+		
+		Iterator<Multi> iteratorW = TvandMv.iterator();
+		
+		while (iteratorW.hasNext()) {
+			Multi m = iteratorW.next();
+			if(m.getMediaType() == MediaType.MOVIE){
+				searchData.add(((MovieDb)m).toString());
+				searchList.put(((MovieDb)m).toString(), (MovieDb)m);
+			}
+		}
+
+		SearchList.setItems(searchData);
+	}
+
 
 	public void AddMovie(ActionEvent event) {
 		if(FavoriteCheckBox.isSelected()){
@@ -160,7 +207,7 @@ public class Controller implements Initializable {
 		}else if(WatchCheckBox.isSelected()){
 			this.addMovieToWatchlist();
 		}else{
-			JOptionPane.showMessageDialog(null, "Please select Favorites or Watchlist");
+			JOptionPane.showMessageDialog(null, "Please select either Favorites or Watchlist");
 		}
 	}
 
@@ -170,7 +217,7 @@ public class Controller implements Initializable {
 		}else if(WatchCheckBox.isSelected()){
 			this.removeItemFromWatchList();
 		}else{
-			JOptionPane.showMessageDialog(null, "Please select Favorites or Watchlist");
+			JOptionPane.showMessageDialog(null, "Please select either Favorites or Watchlist");
 		}
 	}
 	private void addMovieToWatchlist(){
