@@ -13,6 +13,11 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.core.SessionToken;
 
+/**
+ * @author Joseph Cutino
+ * @version 1.0
+ * @since 2016-07-07
+ */
 public class MovieDBAccount {
 	private TmdbApi tmdbApi;
 	private SessionToken sessionToken;
@@ -21,13 +26,12 @@ public class MovieDBAccount {
 	private AccountID actId;
 	TmdbSearch tmdbSearch;
 
-	/*
+	/**
 	 * Public constructor which creates a TmdbApi, session token, account, and
 	 * account ID for use throughout this program.
 	 * 
-	 * @Parameters None
-	 * 
-	 * @author Joseph
+	 * @param None
+	 * @return None
 	 */
 	public MovieDBAccount() {
 		tmdbApi = new TmdbApi("3c55a927fbd8c6990313cb6d5de43d62");
@@ -35,70 +39,102 @@ public class MovieDBAccount {
 		tmdbAccount = tmdbApi.getAccount();
 		act = tmdbAccount.getAccount(sessionToken);
 		actId = new AccountID(act.getId());
-		//moved functionality to new class
-		//tmdbSearch = tmdbApi.getSearch();
 	}
-	
-	public String getUserName(){
+
+	/**
+	 * Returns the current users name.
+	 * 
+	 * @param None
+	 * @return userName Name of the current user
+	 */
+	public String getUserName() {
 		return act.getName();
 	}
 
-	
-	/*
+	/**
+	 * Adds the provided movie to the current users watchlist.
 	 * 
-	 * @author Joseph
+	 * @param movieToAdd
+	 *            The movie chosen to be added.
+	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus addMovieToWatchlist(MovieDb mToAdd) {
 		return tmdbAccount.addToWatchList(sessionToken, actId, mToAdd.getId(), MediaType.MOVIE);
 	}
 
-	/*
-	 * @author Joseph
+	/**
+	 * Removes the provided movie from the current users watchlist.
+	 * 
+	 * @param movieToAdd
+	 *            The movie chosen to be removed.
+	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus removeMovieFromWatchlist(MovieDb mToRemove) {
 		return tmdbAccount.removeFromWatchList(sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
 	}
-	
-	/*
+
+	/**
+	 * Adds the provided movie to the current users favorites.
 	 * 
-	 * @author Joseph
+	 * @param movieToAdd
+	 *            The movie chosen to be added.
+	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus addMovieToFavorites(MovieDb mToAdd) {
 		return tmdbAccount.addFavorite(sessionToken, actId, mToAdd.getId(), MediaType.MOVIE);
 	}
 
-	/*
-	 * @author Joseph
+	/**
+	 * Removes the provided movie from the current users favorites.
+	 * 
+	 * @param movieToAdd
+	 *            The movie chosen to be removed.
+	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus removeMovieFromFavorites(MovieDb mToRemove) {
 		return tmdbAccount.removeFavorite(sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
 	}
 
-	/*
-	 * @author Joseph
+	/**
+	 * Returns the current users watchlist.
+	 * 
+	 * @param None
+	 * @return watchList The watchlist of the current user.
 	 */
 	public MovieResultsPage getWatchList() {
 		return tmdbAccount.getWatchListMovies(sessionToken, actId, 1);
 	}
 
+	/**
+	 * Returns the current users favorites.
+	 * 
+	 * @param None
+	 * @return favorites The favorites of the current user.
+	 */
 	public MovieResultsPage getFavorites() {
 		return tmdbAccount.getFavoriteMovies(sessionToken, actId);
 	}
 
-	/*
-	 * @author Joseph
+	/**
+	 * Provides the caller with a sessionToken generated for the current user.
+	 * 
+	 * @param None
+	 * @return SessionToken session token for the current users session with the
+	 *         movie manager
 	 */
 	private SessionToken getSessionToken() {
 		TmdbAuthentication tmdbAuth = tmdbApi.getAuthentication();
 		TokenSession tokenSession = tmdbAuth.getSessionLogin("cutinoj", "Gv$u2017Temp");
-		System.out.println("Session ID: " + tokenSession.getSessionId());
 		SessionToken sessionToken = new SessionToken(tokenSession.getSessionId());
 
 		return sessionToken;
 	}
 
-	/*
-	 * @author Joseph
+	/**
+	 * Provides the caller with the current users api.
+	 * 
+	 * @param None
+	 * @return TmdbApi api for the current user
 	 */
 	public TmdbApi getTmdbApi() {
 		return tmdbApi;
