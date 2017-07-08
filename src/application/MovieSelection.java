@@ -1,5 +1,7 @@
 package application;
 
+import javax.swing.JOptionPane;
+
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
@@ -112,32 +114,37 @@ public class MovieSelection {
 	 * @return None
 	 */
 	public void generateTrailerWindow(WebView webview) {
-		// media engine used to play trailer
-		webview.getEngine().load(this.getVidoeURL());
-		// new window
-		Stage stage = new Stage();
+		try {
+			// media engine used to play trailer
+			webview.getEngine().load(this.getVidoeURL());
+			// new window
+			Stage stage = new Stage();
 
-		// Anchorpane used to structure video window
-		AnchorPane root2 = new AnchorPane();
-		AnchorPane.setBottomAnchor(webview, 0.0);
-		AnchorPane.setTopAnchor(webview, 0.0);
-		AnchorPane.setLeftAnchor(webview, 0.0);
-		AnchorPane.setRightAnchor(webview, 0.0);
-		root2.getChildren().add(webview);
+			// Anchorpane used to structure video window
+			AnchorPane root2 = new AnchorPane();
+			AnchorPane.setBottomAnchor(webview, 0.0);
+			AnchorPane.setTopAnchor(webview, 0.0);
+			AnchorPane.setLeftAnchor(webview, 0.0);
+			AnchorPane.setRightAnchor(webview, 0.0);
+			root2.getChildren().add(webview);
 
-		// place the trailer within a new scene then placed in the new stage
-		stage.setTitle("TrailerWindow");
-		Scene Trailer = new Scene(root2, 1000, 800);
-		stage.setScene(Trailer);
-		stage.centerOnScreen();
-		stage.show();
-		// event handler to cancle play on close
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				webview.getEngine().load(null);
-			}
-		});
+			// place the trailer within a new scene then placed in the new stage
+			stage.setTitle("TrailerWindow");
+			Scene Trailer = new Scene(root2, 1000, 800);
+			stage.setScene(Trailer);
+			stage.centerOnScreen();
+			stage.show();
+			// event handler to cancel play on close
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent event) {
+					webview.getEngine().load(null);
+				}
+			});
+		} catch (IndexOutOfBoundsException idexEx) {
+			// video trailer not found
+			JOptionPane.showMessageDialog(null, "There is not a trailer associated with this movie.");
+		}
 	}
 
 	/**
