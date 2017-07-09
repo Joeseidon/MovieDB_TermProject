@@ -51,7 +51,7 @@ public class Controller implements Initializable {
 
 	@FXML
 	private ListView<String> WatchList;
-	
+
 	@FXML
 	private ListView<String> SearchList;
 
@@ -63,10 +63,10 @@ public class Controller implements Initializable {
 
 	@FXML
 	private CheckBox FavoriteCheckBox;
-	
+
 	@FXML
 	private CheckBox TitleCheck;
-	
+
 	@FXML
 	private CheckBox KeyWordCheck;
 
@@ -81,7 +81,7 @@ public class Controller implements Initializable {
 
 	@FXML
 	private TextArea DescriptionField;
-	
+
 	@FXML
 	private Label MovieTitle;
 
@@ -107,9 +107,9 @@ public class Controller implements Initializable {
 
 		webview = new WebView();
 		generateFavandWatchlist();
-				
+
 	}
-	
+
 	public void SelectedMovieFromWatchList(MouseEvent event) {
 		selected.setSelectedMovie(watchList.get(WatchList.getSelectionModel().getSelectedItem()));
 		displaySelectedMovie();
@@ -119,19 +119,24 @@ public class Controller implements Initializable {
 		selected.setSelectedMovie(favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem()));
 		displaySelectedMovie();
 	}
-	
-	public void SelectedMovieFromSearchList(MouseEvent event){
+
+	public void SelectedMovieFromSearchList(MouseEvent event) {
 		selected.setSelectedMovie(searchList.get(SearchList.getSelectionModel().getSelectedItem()));
 		displaySelectedMovie();
 	}
-	
-	private void displaySelectedMovie(){
-		Image img = new Image(selected.getImageURL());
-		ImageField.setImage(img);
 
-		MovieTitle.setText("Title: "+selected.getSelectedMovie().getTitle());
+	private void displaySelectedMovie() {
+		try {
+			Image img = new Image(selected.getImageURL());
+			ImageField.setImage(img);
+		} catch (Exception ex) {
+			Image img = new Image("http://npsapps.com/wp-content/uploads/2015/09/slider1-bg.png");
+			ImageField.setImage(img);
+		}
+
+		MovieTitle.setText("Title: " + selected.getSelectedMovie().getTitle());
 		DescriptionField.clear();
-		DescriptionField.appendText("Movie Description: "+selected.getSelectedMovie().getOverview());
+		DescriptionField.appendText("Movie Description: " + selected.getSelectedMovie().getOverview());
 	}
 
 	public void TrailerSelected(ActionEvent event) {
@@ -157,24 +162,20 @@ public class Controller implements Initializable {
 	}
 
 	public void SearchMovie(ActionEvent event) {
-		if(TitleCheck.isSelected() && !KeyWordCheck.isSelected()){
-			searchResultsToDisplay(
-					searchEngine.searchByMovieTitle(SearchField.getText(), false, 2)
-					);
-		}else if(KeyWordCheck.isSelected() && !TitleCheck.isSelected()){
-			searchResultsToDisplay(
-					searchEngine.searchByKeyword(SearchField.getText(),2)
-					);
-		}else{
+		if (TitleCheck.isSelected() && !KeyWordCheck.isSelected()) {
+			searchResultsToDisplay(searchEngine.searchByMovieTitle(SearchField.getText(), false, 2));
+		} else if (KeyWordCheck.isSelected() && !TitleCheck.isSelected()) {
+			searchResultsToDisplay(searchEngine.searchByKeyword(SearchField.getText(), 2));
+		} else {
 			JOptionPane.showMessageDialog(null, "Please select either Title or Keyword");
 		}
 	}
-	
-	private void searchResultsToDisplay(MovieResultsPage mr){
+
+	private void searchResultsToDisplay(MovieResultsPage mr) {
 		ObservableList<String> searchData = FXCollections.observableArrayList();
-				
+
 		Iterator<MovieDb> iteratorW = mr.iterator();
-		
+
 		while (iteratorW.hasNext()) {
 			MovieDb movie = iteratorW.next();
 			searchData.add(movie.toString());
@@ -183,66 +184,69 @@ public class Controller implements Initializable {
 
 		SearchList.setItems(searchData);
 	}
-	
-	private void searchResultsToDisplay(MultiListResultsPage TvandMv){
+
+	private void searchResultsToDisplay(MultiListResultsPage TvandMv) {
 		ObservableList<String> searchData = FXCollections.observableArrayList();
-		
+
 		Iterator<Multi> iteratorW = TvandMv.iterator();
-		
+
 		while (iteratorW.hasNext()) {
 			Multi m = iteratorW.next();
-			if(m.getMediaType() == MediaType.MOVIE){
-				searchData.add(((MovieDb)m).toString());
-				searchList.put(((MovieDb)m).toString(), (MovieDb)m);
+			if (m.getMediaType() == MediaType.MOVIE) {
+				searchData.add(((MovieDb) m).toString());
+				searchList.put(((MovieDb) m).toString(), (MovieDb) m);
 			}
 		}
 
 		SearchList.setItems(searchData);
 	}
 
-
 	public void AddMovie(ActionEvent event) {
-		if(FavoriteCheckBox.isSelected()){
+		if (FavoriteCheckBox.isSelected()) {
 			this.addMovieToFavorites();
-		}else if(WatchCheckBox.isSelected()){
+		} else if (WatchCheckBox.isSelected()) {
 			this.addMovieToWatchlist();
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(null, "Please select either Favorites or Watchlist");
 		}
 	}
 
 	public void RemoveMovie(ActionEvent event) {
-		if(FavoriteCheckBox.isSelected()){
+		if (FavoriteCheckBox.isSelected()) {
 			this.removeItemFromFavorites();
-		}else if(WatchCheckBox.isSelected()){
+		} else if (WatchCheckBox.isSelected()) {
 			this.removeItemFromWatchList();
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(null, "Please select either Favorites or Watchlist");
 		}
 	}
-	private void addMovieToWatchlist(){
+
+	private void addMovieToWatchlist() {
 		user.addMovieToWatchlist(selected.getSelectedMovie());
 		watchList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
 		generateFavandWatchlist();
-		//TODO: add to list view
+		// TODO: add to list view
 	}
-	private void addMovieToFavorites(){
+
+	private void addMovieToFavorites() {
 		user.addMovieToFavorites(selected.getSelectedMovie());
 		favoriteList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
 		generateFavandWatchlist();
-		//TODO: add to list view 
+		// TODO: add to list view
 	}
-	private void removeItemFromWatchList(){
+
+	private void removeItemFromWatchList() {
 		user.removeMovieFromWatchlist(selected.getSelectedMovie());
 		watchList.remove(selected.getSelectedMovie());
 		generateFavandWatchlist();
-		//TODO: add functionality
+		// TODO: add functionality
 	}
-	private void removeItemFromFavorites(){
+
+	private void removeItemFromFavorites() {
 		user.removeMovieFromFavorites(selected.getSelectedMovie());
 		favoriteList.remove(selected.getSelectedMovie());
 		generateFavandWatchlist();
-		//TODO add functionality 
+		// TODO add functionality
 	}
 
 	private void generateFavandWatchlist() {

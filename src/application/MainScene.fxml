@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.media.*?>
@@ -10,75 +12,75 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1374.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1374.0" style="-fx-background-image: url(&quot;http://npsapps.com/wp-content/uploads/2015/09/slider1-bg.png&quot;);;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="125.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" />
-      <Button fx:id="RandomButton" layoutX="143.0" layoutY="699.0" mnemonicParsing="false" onAction="#RandomMovie" text="Random">
+      <ListView fx:id="FavoriteList" editable="true" layoutX="29.0" layoutY="125.0" onMouseClicked="#SelectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
+      <Button fx:id="RandomButton" layoutX="143.0" layoutY="699.0" mnemonicParsing="false" onAction="#RandomMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Random">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="AddButton" layoutX="478.0" layoutY="384.0" mnemonicParsing="false" onAction="#AddMovie" text="Add">
+      <Button fx:id="AddButton" layoutX="478.0" layoutY="384.0" mnemonicParsing="false" onAction="#AddMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Add">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="RemoveButton" layoutX="478.0" layoutY="434.0" mnemonicParsing="false" onAction="#RemoveMovie" text="Remove">
+      <Button fx:id="RemoveButton" layoutX="478.0" layoutY="434.0" mnemonicParsing="false" onAction="#RemoveMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Remove">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="SearchButton" layoutX="613.0" layoutY="13.0" mnemonicParsing="false" onAction="#SearchMovie" text="Search">
+      <Button fx:id="SearchButton" layoutX="613.0" layoutY="13.0" mnemonicParsing="false" onAction="#SearchMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <ImageView fx:id="ImageField" fitHeight="400.0" fitWidth="267.0" layoutX="726.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
-      <CheckBox fx:id="FavoriteCheckBox" layoutX="479.0" layoutY="315.0" mnemonicParsing="false" text="Favorite List">
+      <CheckBox fx:id="FavoriteCheckBox" layoutX="479.0" layoutY="315.0" mnemonicParsing="false" text="Favorite List" textFill="#43f707">
          <font>
             <Font size="18.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="WatchCheckBox" layoutX="478.0" layoutY="349.0" mnemonicParsing="false" text="Watch List">
+      <CheckBox fx:id="WatchCheckBox" layoutX="478.0" layoutY="349.0" mnemonicParsing="false" text="Watch List" textFill="#43f707">
          <font>
             <Font size="18.0" />
          </font>
       </CheckBox>
-      <TextField fx:id="UsernameField" layoutX="59.0" layoutY="41.0" prefHeight="25.0" prefWidth="253.0">
+      <TextField fx:id="UsernameField" layoutX="59.0" layoutY="41.0" prefHeight="25.0" prefWidth="253.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;">
          <effect>
             <Glow />
          </effect>
          <font>
             <Font name="Arabic Typesetting" size="30.0" />
          </font></TextField>
-      <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" />
-      <Label layoutX="156.0" layoutY="24.0" text="User Name" />
-      <TextField fx:id="SearchField" layoutX="708.0" layoutY="13.0" prefHeight="39.0" prefWidth="371.0">
+      <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
+      <Label layoutX="156.0" layoutY="24.0" text="User Name" textFill="#43f707" />
+      <TextField fx:id="SearchField" layoutX="721.0" layoutY="13.0" prefHeight="39.0" prefWidth="358.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" AnchorPane.leftAnchor="721.0">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextArea fx:id="DescriptionField" layoutX="398.0" layoutY="602.0" prefHeight="136.0" prefWidth="922.0" wrapText="true">
+      <TextArea fx:id="DescriptionField" layoutX="398.0" layoutY="602.0" prefHeight="136.0" prefWidth="922.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
-      <Label layoutX="154.0" layoutY="108.0" text="Favorite List" />
-      <Label layoutX="159.0" layoutY="404.0" text="Watch List" />
+      <Label layoutX="154.0" layoutY="108.0" text="Favorite List" textFill="#43f707" />
+      <Label layoutX="159.0" layoutY="404.0" text="Watch List" textFill="#43f707" />
       <Separator layoutX="367.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="771.0" prefWidth="7.0" />
       <Separator layoutX="367.0" layoutY="161.0" prefHeight="17.0" prefWidth="1008.0" />
-      <Button fx:id="TrailerButton" layoutX="478.0" layoutY="484.0" mnemonicParsing="false" onAction="#TrailerSelected" text="Trailer">
+      <Button fx:id="TrailerButton" layoutX="478.0" layoutY="484.0" mnemonicParsing="false" onAction="#TrailerSelected" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Trailer">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="SearchList" layoutX="612.0" layoutY="58.0" onMouseClicked="#SelectedMovieFromSearchList" prefHeight="101.0" prefWidth="466.0" />
+      <ListView fx:id="SearchList" layoutX="612.0" layoutY="58.0" onMouseClicked="#SelectedMovieFromSearchList" prefHeight="101.0" prefWidth="466.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
       <Label fx:id="MovieTitle" layoutX="845.0" layoutY="582.0" text="Label" />
-      <CheckBox fx:id="TitleCheck" layoutX="470.0" layoutY="24.0" mnemonicParsing="false" text="Title">
+      <CheckBox fx:id="TitleCheck" layoutX="470.0" layoutY="24.0" mnemonicParsing="false" text="Title" textFill="#43f707">
          <font>
             <Font size="18.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="KeyWordCheck" layoutX="470.0" layoutY="58.0" mnemonicParsing="false" text="Keyword">
+      <CheckBox fx:id="KeyWordCheck" layoutX="470.0" layoutY="58.0" mnemonicParsing="false" text="Keyword" textFill="#43f707">
          <font>
             <Font size="18.0" />
          </font>
