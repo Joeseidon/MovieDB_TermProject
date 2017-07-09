@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -99,7 +100,15 @@ public class Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		user = new MovieDBAccount();
+		try {
+			user = new MovieDBAccount();
+		} catch (DataBaseConnectionException e) {
+			//Connection Error
+			JOptionPane.showMessageDialog(null,"Connection Error: "+e.getMessage()+"\nCheck internet connection and restart program.");
+			//Close down the program
+			Platform.exit();
+			System.exit(0);
+		}
 		UsernameField.appendText(user.getUserName());
 		selected = new MovieSelection(user);
 		searchEngine = new SearchModule(user.getTmdbApi());

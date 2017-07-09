@@ -33,12 +33,16 @@ public class MovieDBAccount {
 	 * @param None
 	 * @return None
 	 */
-	public MovieDBAccount() {
+	public MovieDBAccount() throws DataBaseConnectionException {
+		try{
 		tmdbApi = new TmdbApi("3c55a927fbd8c6990313cb6d5de43d62");
 		sessionToken = getSessionToken();
 		tmdbAccount = tmdbApi.getAccount();
 		act = tmdbAccount.getAccount(sessionToken);
 		actId = new AccountID(act.getId());
+		}catch (Exception e){
+			throw new DataBaseConnectionException("Failed to connect to the Movie Data Base");
+		}
 	}
 
 	/**
