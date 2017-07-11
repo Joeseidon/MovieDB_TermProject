@@ -103,9 +103,10 @@ public class Controller implements Initializable {
 		try {
 			user = new MovieDBAccount();
 		} catch (DataBaseConnectionException e) {
-			//Connection Error
-			JOptionPane.showMessageDialog(null,"Connection Error: "+e.getMessage()+"\nCheck internet connection and restart program.");
-			//Close down the program
+			// Connection Error
+			JOptionPane.showMessageDialog(null,
+					"Connection Error: " + e.getMessage() + "\nCheck internet connection and restart program.");
+			// Close down the program
 			Platform.exit();
 			System.exit(0);
 		}
@@ -120,18 +121,27 @@ public class Controller implements Initializable {
 	}
 
 	public void SelectedMovieFromWatchList(MouseEvent event) {
-		selected.setSelectedMovie(watchList.get(WatchList.getSelectionModel().getSelectedItem()));
-		displaySelectedMovie();
+		String selectedTitle = WatchList.getSelectionModel().getSelectedItem();
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(watchList.get(selectedTitle));
+			displaySelectedMovie();
+		}
 	}
 
 	public void SelectedMovieFromFavoriteList(MouseEvent event) {
-		selected.setSelectedMovie(favoriteList.get(FavoriteList.getSelectionModel().getSelectedItem()));
-		displaySelectedMovie();
+		String selectedTitle = FavoriteList.getSelectionModel().getSelectedItem();
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(favoriteList.get(selectedTitle));
+			displaySelectedMovie();
+		}
 	}
 
 	public void SelectedMovieFromSearchList(MouseEvent event) {
-		selected.setSelectedMovie(searchList.get(SearchList.getSelectionModel().getSelectedItem()));
-		displaySelectedMovie();
+		String selectedTitle = SearchList.getSelectionModel().getSelectedItem();
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(searchList.get(selectedTitle));
+			displaySelectedMovie();
+		}
 	}
 
 	private void displaySelectedMovie() {
@@ -191,7 +201,7 @@ public class Controller implements Initializable {
 			searchData.add(movie.toString());
 			searchList.put(movie.toString(), movie);
 		}
-		if(!results){
+		if (!results) {
 			searchData.add("Sorry, your search resulted in no results.");
 		}
 		SearchList.setItems(searchData);
