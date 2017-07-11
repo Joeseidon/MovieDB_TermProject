@@ -218,7 +218,7 @@ public class TmdbRandomizer {
 	 *            the api
 	 * @return None
 	 */
-	private void createMoviesObj(TmdbApi Apikey) {
-		movieObj = new TmdbMovies(Apikey);
+	private void createMoviesObj(TmdbApi apiKey) {
+		movieObj = new TmdbMovies(apiKey);
 	}
 }

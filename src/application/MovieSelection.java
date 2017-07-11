@@ -90,11 +90,6 @@ public class MovieSelection {
 	 * @return trailerURL Of type string
 	 */
 	public String getVidoeURL() {
-		/*
-		 * TODO: ADD protection (perferably an execption throw) for indexing a
-		 * video that doesnt exist. As in there are no videos for the selected
-		 * movie.
-		 */
 		return youTubeBaseURL + movieObj.getVideos(this.getSelectedMovie().getId(), "English").get(0).getKey();
 	}
 
@@ -134,8 +129,8 @@ public class MovieSelection {
 
 			// place the trailer within a new scene then placed in the new stage
 			stage.setTitle("TrailerWindow");
-			Scene Trailer = new Scene(root2, 1000, 800);
-			stage.setScene(Trailer);
+			Scene trailer = new Scene(root2, 1000, 800);
+			stage.setScene(trailer);
 			stage.centerOnScreen();
 			stage.show();
 			// event handler to cancel play on close
@@ -171,8 +166,8 @@ public class MovieSelection {
 	 *            Used to connect the movie object with the user
 	 * @return None
 	 */
-	private void createMoviesObject(TmdbApi Apikey) {
-		movieObj = new TmdbMovies(Apikey);
+	private void createMoviesObject(TmdbApi apiKey) {
+		movieObj = new TmdbMovies(apiKey);
 	}
 
 	/**

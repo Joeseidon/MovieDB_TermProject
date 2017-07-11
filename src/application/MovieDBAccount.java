@@ -4,7 +4,6 @@ import info.movito.themoviedbapi.TmdbAccount.MediaType;
 import info.movito.themoviedbapi.TmdbAccount;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbAuthentication;
-import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.config.Account;
 import info.movito.themoviedbapi.model.config.TokenSession;
@@ -27,24 +26,25 @@ public class MovieDBAccount {
 	private TmdbAccount tmdbAccount;
 	private Account act;
 	private AccountID actId;
-	private TmdbSearch tmdbSearch;
 
 	/**
-	 * Public constructor which creates a TmdbApi, session token, account, and
-	 * account ID for use throughout this program.
+	 * Public constructor which creates a TmdbApi, session token, account, 
+	 * and account ID for use throughout this program.
 	 * 
 	 * @param None
-	 * @return None
+	 * @exception DataBaseConnectionException
+	 * 		exception for when database can't connect
 	 */
 	public MovieDBAccount() throws DataBaseConnectionException {
-		try{
+		try {
 		tmdbApi = new TmdbApi("3c55a927fbd8c6990313cb6d5de43d62");
 		sessionToken = getSessionToken();
 		tmdbAccount = tmdbApi.getAccount();
 		act = tmdbAccount.getAccount(sessionToken);
 		actId = new AccountID(act.getId());
-		}catch (Exception e){
-			throw new DataBaseConnectionException("Failed to connect to the Movie Data Base");
+		} catch (Exception e) {
+			throw new DataBaseConnectionException(
+				"Failed to connect to the Movie Data Base");
 		}
 	}
 
