@@ -28,9 +28,17 @@ import info.movito.themoviedbapi.model.Multi.MediaType;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /*
+ * @description This class is the action controller for the FXML file
+ * 
  * @author Josh Winfrey
+ * @version 1.0
+ * @since 2017-10-07
  */
 public class Controller implements Initializable {
+	
+	/**
+	 * GUI object declarations.
+	 */
 
 	@FXML
 	private Button AddButton;
@@ -85,18 +93,40 @@ public class Controller implements Initializable {
 
 	@FXML
 	private Label MovieTitle;
-
+	
+	/**
+	 * Objects for holding the user's account information, the 
+	 * 	selected movie, the trailer search engine, and a random movie
+	 * 	generator.
+	 */
 	private MovieDBAccount user;
 	private MovieSelection selected;
 	private SearchModule searchEngine;
 	private TmdbRandomizer randMovieGen;
 
+	/**
+	 * Object to hold the movie trailer.
+	 */
 	private WebView webview;
 
+	/**
+	 * Objects to hold the user's favorite and watch list information
+	 * 	as well as the search results.
+	 */
 	private Hashtable<String, MovieDb> watchList = new Hashtable<String, MovieDb>();
 	private Hashtable<String, MovieDb> favoriteList = new Hashtable<String, MovieDb>();
 	private Hashtable<String, MovieDb> searchList = new Hashtable<String, MovieDb>();
 
+	/**
+	 * Overrides the initialization function which 
+	 * 	runs at the start of the project.
+	 * 
+	 * @param location
+	 * 		location of FXML file
+	 * @param resources
+	 * 		resources of FXML file
+	 * @return None
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -120,6 +150,14 @@ public class Controller implements Initializable {
 
 	}
 
+	/**
+	 * Allows users to click on items in the watch list and 
+	 * 	displays them in the window.
+	 * 
+	 * @param event
+	 * 		mouse click
+	 * @return None
+	 */
 	public void SelectedMovieFromWatchList(MouseEvent event) {
 		String selectedTitle = WatchList.getSelectionModel().getSelectedItem();
 		if (selectedTitle != null) {
@@ -128,6 +166,14 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Allows users to click on items in the favorite list and
+	 * 	displays them in the window.
+	 * 
+	 * @param event
+	 * 		mouse click
+	 * @return None
+	 */
 	public void SelectedMovieFromFavoriteList(MouseEvent event) {
 		String selectedTitle = FavoriteList.getSelectionModel().getSelectedItem();
 		if (selectedTitle != null) {
@@ -136,6 +182,14 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Allows users to click on items in the search list and
+	 * 	displays them in the window.
+	 * 
+	 * @param event
+	 * 		mouse click
+	 * @return None
+	 */
 	public void SelectedMovieFromSearchList(MouseEvent event) {
 		String selectedTitle = SearchList.getSelectionModel().getSelectedItem();
 		if (selectedTitle != null) {
@@ -144,6 +198,12 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Displays the selected movie in the window.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void displaySelectedMovie() {
 		try {
 			Image img = new Image(selected.getImageURL());
@@ -158,10 +218,26 @@ public class Controller implements Initializable {
 		DescriptionField.appendText("Movie Description: " + selected.getSelectedMovie().getOverview());
 	}
 
+	/**
+	 * Allows users to play the trailer for the selected movie with
+	 * 	a button press.
+	 * 
+	 * @param event
+	 * 		button press
+	 * @return None
+	 */
 	public void TrailerSelected(ActionEvent event) {
 		selected.generateTrailerWindow(webview);
 	}
 
+	/**
+	 * Allows users to generate a random movie with a button press
+	 * 	and displays it in the window.
+	 * 
+	 * @param event
+	 * 		button press
+	 * @return None
+	 */
 	public void RandomMovie(ActionEvent event) {
 
 		try {
@@ -180,6 +256,14 @@ public class Controller implements Initializable {
 
 	}
 
+	/**
+	 * Allows user to search for a movie based on keyword or title
+	 * 	and displays results in the search list.
+	 * 
+	 * @param event
+	 * 		button press
+	 * @return None
+	 */
 	public void SearchMovie(ActionEvent event) {
 		if (TitleCheck.isSelected() && !KeyWordCheck.isSelected()) {
 			searchResultsToDisplay(searchEngine.searchByMovieTitle(SearchField.getText(), false, 2));
@@ -190,6 +274,13 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Adds movie(s) to the search list.
+	 * 
+	 * @param mr
+	 * 		movie(s) found using title search
+	 * @return None
+	 */
 	private void searchResultsToDisplay(MovieResultsPage mr) {
 		ObservableList<String> searchData = FXCollections.observableArrayList();
 
@@ -207,6 +298,13 @@ public class Controller implements Initializable {
 		SearchList.setItems(searchData);
 	}
 
+	/**
+	 * Adds movie(s) to search list.
+	 * 
+	 * @param TvandMv
+	 * 		movie(s) found by keyword search
+	 * @return None
+	 */
 	private void searchResultsToDisplay(MultiListResultsPage TvandMv) {
 		ObservableList<String> searchData = FXCollections.observableArrayList();
 
@@ -223,6 +321,14 @@ public class Controller implements Initializable {
 		SearchList.setItems(searchData);
 	}
 
+	/**
+	 * Allows users to add the selected movie to their favorite list
+	 * 	or their watch list.
+	 * 
+	 * @param event
+	 * 		button press
+	 * @return None
+	 */
 	public void AddMovie(ActionEvent event) {
 		if (FavoriteCheckBox.isSelected()) {
 			this.addMovieToFavorites();
@@ -233,6 +339,14 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Allows users to remove the selected movie from their favorite
+	 * 	list or watch list.
+	 * 
+	 * @param event
+	 * 		button press
+	 * @return None
+	 */
 	public void RemoveMovie(ActionEvent event) {
 		if (FavoriteCheckBox.isSelected()) {
 			this.removeItemFromFavorites();
@@ -243,6 +357,12 @@ public class Controller implements Initializable {
 		}
 	}
 
+	/**
+	 * Adds selected movie to watch list.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void addMovieToWatchlist() {
 		user.addMovieToWatchlist(selected.getSelectedMovie());
 		watchList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
@@ -250,6 +370,12 @@ public class Controller implements Initializable {
 		// TODO: add to list view
 	}
 
+	/**
+	 * Adds selected movie to favorite list.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void addMovieToFavorites() {
 		user.addMovieToFavorites(selected.getSelectedMovie());
 		favoriteList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
@@ -257,6 +383,12 @@ public class Controller implements Initializable {
 		// TODO: add to list view
 	}
 
+	/**
+	 * Removes selected movie from watch list.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void removeItemFromWatchList() {
 		user.removeMovieFromWatchlist(selected.getSelectedMovie());
 		watchList.remove(selected.getSelectedMovie());
@@ -264,6 +396,12 @@ public class Controller implements Initializable {
 		// TODO: add functionality
 	}
 
+	/**
+	 * 	Removes selected movie from favorite list.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void removeItemFromFavorites() {
 		user.removeMovieFromFavorites(selected.getSelectedMovie());
 		favoriteList.remove(selected.getSelectedMovie());
@@ -271,6 +409,13 @@ public class Controller implements Initializable {
 		// TODO add functionality
 	}
 
+	/**
+	 * Fills the favorite and watch lists with information from the
+	 * 	users account.
+	 * 
+	 * @param None
+	 * @return None
+	 */
 	private void generateFavandWatchlist() {
 		ObservableList<String> watchdata = FXCollections.observableArrayList();
 		ObservableList<String> favoritedata = FXCollections.observableArrayList();
