@@ -11,7 +11,6 @@ public class DataBaseConnectionException extends Exception {
 	 * Public constructor that creates an exception without a message.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	public DataBaseConnectionException() {
 	}
@@ -21,9 +20,8 @@ public class DataBaseConnectionException extends Exception {
 	 * 
 	 * @param message
 	 *            Exception message.
-	 * @return None
 	 */
-	public DataBaseConnectionException(String message) {
+	public DataBaseConnectionException(final String message) {
 		super(message);
 	}
 }
