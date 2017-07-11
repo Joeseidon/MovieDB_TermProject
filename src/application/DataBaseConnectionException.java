@@ -1,6 +1,8 @@
 package application;
 
 /**
+ * Exception thrown when a connection to the movie data was
+ * interrupted or never made.
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07

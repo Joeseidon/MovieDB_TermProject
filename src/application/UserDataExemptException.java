@@ -1,6 +1,9 @@
 package application;
 
 /**
+ * This exception is thrown when database data is used in place of 
+ * user data. This can occur when the current users watch list and 
+ * favorites are empty.
  * @author  Joseph Cutino
  * @version 1.0
  * @since   2016-07-07

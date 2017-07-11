@@ -9,6 +9,9 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 
 /**
+ * This class links with an existing MovieDBAccount and is
+ * used to generate a random movie pool which the user can 
+ * draw from for suggestions. 
  * @author Joseph Cutino
  * @version 1.0
  * @since 2017-07-07

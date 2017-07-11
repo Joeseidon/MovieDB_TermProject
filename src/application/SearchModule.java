@@ -5,6 +5,9 @@ import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
+ * This class links with an existing MovieDBAccount object and is 
+ * used to perform search queries from the database for the current
+ * account.
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07

@@ -1,6 +1,8 @@
 package application;
 
 /**
+ * This exception is thrown when a random movie pool was not 
+ * created or the resulting pool was null.
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07

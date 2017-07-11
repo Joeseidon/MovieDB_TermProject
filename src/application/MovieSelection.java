@@ -13,6 +13,10 @@ import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
 /**
+ * This class is linked with a current MovieDBAccount and holds that 
+ * accounts currently selected movie. This class will provide access
+ * to specific aspects of the currently selected movie such as 
+ * video and image information.
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07

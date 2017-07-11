@@ -14,6 +14,9 @@ import info.movito.themoviedbapi.model.core.ResponseStatus;
 import info.movito.themoviedbapi.model.core.SessionToken;
 
 /**
+ * Creates an account which links with an existing movie database 
+ * account. This class manages account preferences (ex. favorites 
+ * and watch list).
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07
