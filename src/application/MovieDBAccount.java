@@ -21,12 +21,26 @@ import info.movito.themoviedbapi.model.core.SessionToken;
  * @since 2016-07-07
  */
 public class MovieDBAccount {
+	/**
+	 * Api connection created for current account. 
+	 */
 	private TmdbApi tmdbApi;
+	/**
+	 * Current session for this instance of MovieDBAccount.
+	 */
 	private SessionToken sessionToken;
+	/**
+	 * Movie database account being accessed.
+	 */
 	private TmdbAccount tmdbAccount;
+	/**
+	 * Account data.
+	 */
 	private Account act;
+	/**
+	 * Account ID.
+	 */
 	private AccountID actId;
-
 	/**
 	 * Public constructor which creates a TmdbApi, session token, account, 
 	 * and account ID for use throughout this program.

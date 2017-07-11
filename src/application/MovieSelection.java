@@ -22,11 +22,26 @@ import javafx.stage.WindowEvent;
  * @since 2016-07-07
  */
 public class MovieSelection {
+	/**
+	 * Accounts currently selected movie. 
+	 */
 	private MovieDb selectedMovie;
+	/**
+	 * Current application user.
+	 */
 	private MovieDBAccount user;
+	/**
+	 * Movie database object used for acquiring movie specific data. 
+	 */
 	private TmdbMovies movieObj;
-	private String youTubeBaseURL = "https://www.youtube.com/watch?v=";
-	private String baseImageURL = "https://image.tmdb.org/t/p/w500";
+	/**
+	 * Base URL used for trailer queries from movie database.
+	 */
+	private final String youTubeBaseURL = "https://www.youtube.com/watch?v=";
+	/**
+	 * Base URL used for image queries from movie database.
+	 */
+	private final String baseImageURL = "https://image.tmdb.org/t/p/w500";
 
 	/**
 	 * Public constructor used to create a MovieSelection instance. An instance

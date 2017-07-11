@@ -17,10 +17,25 @@ import info.movito.themoviedbapi.model.MovieDb;
  * @since 2017-07-07
  */
 public class TmdbRandomizer {
+	/**
+	 * Current users movie watchlist.
+	 */
 	private List<MovieDb> movieWatchList;
+	/**
+	 * Current users favorite movies.
+	 */
 	private List<MovieDb> movieFavorites;
+	/**
+	 * Random movie dictionary created from user data or top movies on databas.
+	 */
 	private ArrayList<MovieDb> moviePool;
+	/**
+	 * Current user.
+	 */
 	private MovieDBAccount user;
+	/**
+	 * Movie database object used for generating movie specific data.
+	 */
 	private TmdbMovies movieObj;
 
 	/**

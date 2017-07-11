@@ -14,9 +14,12 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
  */
 public class SearchModule extends TmdbSearch {
 
+	/**
+	 * Public constructor for creating a new searchModule.
+	 * @param tmdbApi Used to connect to the movie database.
+	 */
 	public SearchModule(TmdbApi tmdbApi) {
 		super(tmdbApi);
-
 	}
 
 	/**
