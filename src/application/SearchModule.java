@@ -18,7 +18,7 @@ public class SearchModule extends TmdbSearch {
 
 	/**
 	 * Function returns a page of results from the movie database pertaining to
-	 * the input search string
+	 * 	the input search string.
 	 * 
 	 * @param searchString
 	 *            Title to search for related movies with.

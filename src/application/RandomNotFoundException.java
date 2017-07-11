@@ -8,7 +8,7 @@ package application;
 @SuppressWarnings("serial")
 public class RandomNotFoundException extends Exception {
 	/**
-	 * This constructor creates an exception without a message
+	 * This constructor creates an exception without a message.
 	 * 
 	 * @param None
 	 * @return None

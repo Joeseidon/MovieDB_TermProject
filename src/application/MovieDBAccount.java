@@ -24,7 +24,7 @@ public class MovieDBAccount {
 	private TmdbAccount tmdbAccount;
 	private Account act;
 	private AccountID actId;
-	TmdbSearch tmdbSearch;
+	private TmdbSearch tmdbSearch;
 
 	/**
 	 * Public constructor which creates a TmdbApi, session token, account, and

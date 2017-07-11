@@ -1,7 +1,9 @@
 package application;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 
@@ -27,9 +29,8 @@ import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.Multi.MediaType;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
-/*
- * @description This class is the action controller for the FXML file
- * 
+/**
+ * This class is the action controller for the FXML file.
  * @author Josh Winfrey
  * @version 1.0
  * @since 2017-10-07
@@ -367,7 +368,6 @@ public class Controller implements Initializable {
 		user.addMovieToWatchlist(selected.getSelectedMovie());
 		watchList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
 		generateFavandWatchlist();
-		// TODO: add to list view
 	}
 
 	/**
@@ -380,7 +380,6 @@ public class Controller implements Initializable {
 		user.addMovieToFavorites(selected.getSelectedMovie());
 		favoriteList.put(selected.getSelectedMovie().getTitle(), selected.getSelectedMovie());
 		generateFavandWatchlist();
-		// TODO: add to list view
 	}
 
 	/**
@@ -393,7 +392,6 @@ public class Controller implements Initializable {
 		user.removeMovieFromWatchlist(selected.getSelectedMovie());
 		watchList.remove(selected.getSelectedMovie());
 		generateFavandWatchlist();
-		// TODO: add functionality
 	}
 
 	/**

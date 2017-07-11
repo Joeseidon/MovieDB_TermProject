@@ -9,7 +9,7 @@ package application;
 public class UserDataExemptException extends Exception {
 
 	/**
-	 * This constructor creates an exception with no message
+	 * This constructor creates an exception with no message.
 	 * 
 	 * @param None
 	 * @return None

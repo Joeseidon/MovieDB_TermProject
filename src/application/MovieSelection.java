@@ -161,7 +161,7 @@ public class MovieSelection {
 	}
 
 	/**
-	 * Creates a movie object for later use
+	 * Creates a movie object for later use.
 	 * 
 	 * @param APIKey
 	 *            Used to connect the movie object with the user

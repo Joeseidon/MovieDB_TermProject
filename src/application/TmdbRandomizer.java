@@ -40,10 +40,8 @@ public class TmdbRandomizer {
 
 	/**
 	 * This function pulls the current users watchlist and favorites from the
-	 * movie database and stores them locally
-	 * 
+	 * 	movie database and stores them locally.
 	 * @param None
-	 * @return None
 	 */
 	public void update() {
 		updateFavorites();
@@ -132,8 +130,8 @@ public class TmdbRandomizer {
 	}
 
 	/**
-	 * Generates a random movie pool from the current users favorits and
-	 * watchlist
+	 * Generates a random movie pool from the current users favorites and
+	 * 	watch list.
 	 * 
 	 * @param None
 	 * @return MoviePool Arraylist of random movies
@@ -188,7 +186,7 @@ public class TmdbRandomizer {
 
 	/**
 	 * Updates local favorites list with data retrieved from database for
-	 * current user
+	 * 	current user.
 	 * 
 	 * @param None
 	 * @return None
@@ -198,8 +196,8 @@ public class TmdbRandomizer {
 	}
 
 	/**
-	 * Updates local watchlist with data retrieved from database for current
-	 * user
+	 * Updates local watch list with data retrieved from database for current
+	 * 	user.
 	 * 
 	 * @param None
 	 * @return None
@@ -209,7 +207,7 @@ public class TmdbRandomizer {
 	}
 
 	/**
-	 * Generates a movieObj for the current users API key
+	 * Generates a movieObj for the current users API key.
 	 * 
 	 * @param ApiKey
 	 *            Provided to the java wrappers to link the movie object with
