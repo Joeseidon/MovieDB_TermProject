@@ -184,13 +184,16 @@ public class Controller implements Initializable {
 		ObservableList<String> searchData = FXCollections.observableArrayList();
 
 		Iterator<MovieDb> iteratorW = mr.iterator();
-
+		boolean results = false;
 		while (iteratorW.hasNext()) {
+			results = true;
 			MovieDb movie = iteratorW.next();
 			searchData.add(movie.toString());
 			searchList.put(movie.toString(), movie);
 		}
-
+		if(!results){
+			searchData.add("Sorry, your search resulted in no results.");
+		}
 		SearchList.setItems(searchData);
 	}
 
