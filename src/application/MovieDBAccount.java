@@ -61,7 +61,7 @@ public class MovieDBAccount {
 	/**
 	 * Adds the provided movie to the current users watchlist.
 	 * 
-	 * @param movieToAdd
+	 * @param mToAdd
 	 *            The movie chosen to be added.
 	 * @return responseStatus The status of the requested action.
 	 */
@@ -72,7 +72,7 @@ public class MovieDBAccount {
 	/**
 	 * Removes the provided movie from the current users watchlist.
 	 * 
-	 * @param movieToAdd
+	 * @param mToRemove
 	 *            The movie chosen to be removed.
 	 * @return responseStatus The status of the requested action.
 	 */
@@ -83,7 +83,7 @@ public class MovieDBAccount {
 	/**
 	 * Adds the provided movie to the current users favorites.
 	 * 
-	 * @param movieToAdd
+	 * @param mToAdd
 	 *            The movie chosen to be added.
 	 * @return responseStatus The status of the requested action.
 	 */
@@ -94,7 +94,7 @@ public class MovieDBAccount {
 	/**
 	 * Removes the provided movie from the current users favorites.
 	 * 
-	 * @param movieToAdd
+	 * @param mToRemove
 	 *            The movie chosen to be removed.
 	 * @return responseStatus The status of the requested action.
 	 */
