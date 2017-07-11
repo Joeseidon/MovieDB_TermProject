@@ -55,7 +55,7 @@
          </font></TextField>
       <ListView fx:id="WatchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#SelectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
       <Label layoutX="156.0" layoutY="24.0" text="User Name" textFill="#43f707" />
-      <TextField fx:id="SearchField" layoutX="721.0" layoutY="13.0" prefHeight="39.0" prefWidth="358.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" AnchorPane.leftAnchor="721.0">
+      <TextField fx:id="SearchField" layoutX="721.0" layoutY="13.0" onAction="#SearchMovie" prefHeight="39.0" prefWidth="358.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" AnchorPane.leftAnchor="721.0">
          <font>
             <Font size="18.0" />
          </font>
