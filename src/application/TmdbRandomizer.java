@@ -68,12 +68,13 @@ public class TmdbRandomizer {
 			}
 		}
 		// These exceptions may be unneccesary now
-		if (moviePool.isEmpty()) {
-			throw new RandomNotFoundException("moviePool is empty. Regenerate Pool");
-		}
 		if (moviePool == null) {
 			throw new RandomNotFoundException("moviePool is empty. Regenerate Pool");
 		}
+		if (moviePool.isEmpty()) {
+			throw new RandomNotFoundException("moviePool is empty. Regenerate Pool");
+		}
+		
 
 		// if there are movies in the pool generate a random movie from the pool
 		Random rnd = new Random();
