@@ -391,7 +391,7 @@ public class Controller implements Initializable {
 	 */
 	private void removeItemFromWatchList() {
 		user.removeMovieFromWatchlist(selected.getSelectedMovie());
-		watchList.remove(selected.getSelectedMovie());
+		watchList.remove(selected.getSelectedMovie().getTitle());
 		generateFavandWatchlist();
 		// TODO: add functionality
 	}
@@ -404,7 +404,7 @@ public class Controller implements Initializable {
 	 */
 	private void removeItemFromFavorites() {
 		user.removeMovieFromFavorites(selected.getSelectedMovie());
-		favoriteList.remove(selected.getSelectedMovie());
+		favoriteList.remove(selected.getSelectedMovie().getTitle());
 		generateFavandWatchlist();
 		// TODO add functionality
 	}
