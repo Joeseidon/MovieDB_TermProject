@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * Application file.
+ * 
  * @author Joshua
  * @version 1.0
  * @since 2017-11-7
@@ -17,7 +18,7 @@ public class App extends Application {
 	@Override
 	public void start(final Stage primaryStage) {
 		try {
-			// Read file fxml and draw interface.
+			// Read file FXML and draw interface.
 			Parent root = FXMLLoader.load(getClass().
 				getResource("/application/MainScene.fxml"));
 			
@@ -30,9 +31,11 @@ public class App extends Application {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * Main function for the application.
-	 * @param args command line arguments
+	 * 
+	 * @param args Command line arguments
 	 */
 	public static void main(final String[] args) {
 		launch(args);

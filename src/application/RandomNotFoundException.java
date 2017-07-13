@@ -1,8 +1,9 @@
 package application;
 
 /**
- * This exception is thrown when a random movie pool was not 
- * created or the resulting pool was null.
+ * This exception is thrown when a random movie pool
+ * was not created or the resulting pool was null.
+ * 
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07
@@ -13,19 +14,17 @@ public class RandomNotFoundException extends Exception {
 	 * This constructor creates an exception without a message.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	public RandomNotFoundException() {
+		
 	}
 
 	/**
 	 * This constructor creates an exception with a message.
 	 * 
-	 * @param message
-	 *            String that will be stored within the exception
-	 * @return None
+	 * @param message String that will be stored within the exception
 	 */
-	public RandomNotFoundException(String message) {
+	public RandomNotFoundException(final String message) {
 		super(message);
 	}
 }

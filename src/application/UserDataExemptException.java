@@ -1,9 +1,10 @@
 package application;
 
 /**
- * This exception is thrown when database data is used in place of 
- * user data. This can occur when the current users watch list and 
- * favorites are empty.
+ * This exception is thrown when database data is
+ * used in place of user data. This can occur when the
+ * current users watch list and favorites are empty.
+ * 
  * @author  Joseph Cutino
  * @version 1.0
  * @since   2016-07-07
@@ -15,19 +16,17 @@ public class UserDataExemptException extends Exception {
 	 * This constructor creates an exception with no message.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	public UserDataExemptException() {
+		
 	}
 
 	/**
 	 * This constructor creates an exception with a message.
 	 * 
-	 * @param message
-	 *            String that will be stored within the exception
-	 * @return None
+	 * @param message String that will be stored within the exception
 	 */
-	public UserDataExemptException(String message) {
+	public UserDataExemptException(final String message) {
 		super(message);
 	}
 }

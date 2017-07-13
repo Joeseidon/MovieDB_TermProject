@@ -1,8 +1,9 @@
 package application;
 
 /**
- * Exception thrown when a connection to the movie data was
- * interrupted or never made.
+ * Exception thrown when a connection to the
+ * movie data was interrupted or never made.
+ * 
  * @author Joseph Cutino
  * @version 1.0
  * @since 2016-07-07
@@ -15,13 +16,13 @@ public class DataBaseConnectionException extends Exception {
 	 * @param None
 	 */
 	public DataBaseConnectionException() {
+		
 	}
 
 	/**
 	 * Public constructor that creates an exception with a message.
 	 * 
-	 * @param message
-	 *            Exception message.
+	 * @param message Exception message.
 	 */
 	public DataBaseConnectionException(final String message) {
 		super(message);

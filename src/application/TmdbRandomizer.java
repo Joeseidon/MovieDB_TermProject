@@ -9,56 +9,65 @@ import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.model.MovieDb;
 
 /**
- * This class links with an existing MovieDBAccount and is
- * used to generate a random movie pool which the user can 
- * draw from for suggestions. 
+ * This class links with an existing MovieDBAccount
+ * and is used to generate a random movie pool which
+ * the user can draw from for suggestions.
+ * 
  * @author Joseph Cutino
  * @version 1.0
  * @since 2017-07-07
  */
 public class TmdbRandomizer {
 	/**
-	 * Current users movie watchlist.
+	 * Current users movie watch list.
 	 */
 	private List<MovieDb> movieWatchList;
+	
 	/**
 	 * Current users favorite movies.
 	 */
 	private List<MovieDb> movieFavorites;
+	
 	/**
-	 * Random movie dictionary created from user data or top movies on databas.
+	 * Random movie dictionary created from
+	 * user data or top movies on database.
 	 */
 	private ArrayList<MovieDb> moviePool;
+	
 	/**
 	 * Current user.
 	 */
 	private MovieDBAccount user;
+	
 	/**
 	 * Movie database object used for generating movie specific data.
 	 */
 	private TmdbMovies movieObj;
 
 	/**
-	 * This constructor creates a movie database randomizer for the provided
-	 * account.
+	 * This constructor creates a movie database
+	 * randomizer for the provided account.
 	 * 
-	 * @param user
-	 *            The account from which this randomizer will draw data.
-	 * @return None
+	 * @param user The account from which this randomizer will draw data.
 	 */
-	public TmdbRandomizer(MovieDBAccount usr) {
-		this.user = usr;
-		// store the users favorites and watchlist for later randomization
+	public TmdbRandomizer(final MovieDBAccount user) {
+		this.user = user;
+		
+		// Store the users favorites and
+		// watch list for later randomization
 		this.update();
-		// creates a movies object for later use
+		
+		// Creates a movies object for later use
 		createMoviesObj(user.getTmdbApi());
-		// generates a pool of random movies that the user may like
+		
+		// Generates a pool of random movies that the user may like
 		generatePool();
 	}
 
 	/**
-	 * This function pulls the current users watchlist and favorites from the
-	 * 	movie database and stores them locally.
+	 * This function pulls the current users watch list and favorites
+	 * from the movie database and stores them locally.
+	 * 
 	 * @param None
 	 */
 	public void update() {
@@ -67,56 +76,60 @@ public class TmdbRandomizer {
 	}
 
 	/**
-	 * This function provides the caller with a random movie from the generated
-	 * movie pool as long as a movie pool has been generated.
+	 * This function provides the caller with a random movie from the
+	 * generated movie pool as long as a movie pool has been generated.
 	 * 
 	 * @param None
 	 * @return MovieDb Random movie
-	 * @throws RandomNotFoundException
-	 *             Thrown when a movie pool hasn't been generated.
+	 * @throws RandomNotFoundException Thrown when a movie pool
+	 *                                 hasn't been generated.
 	 */
 	public MovieDb getRandomMovie() throws RandomNotFoundException {
 		if (moviePool == null || moviePool.isEmpty()) {
-			// if a movie pool doesn't exits, generate one
+			// If a movie pool doesn't exits, generate one
 			try {
-				// generate movie pool
+				// Generate movie pool
 				moviePool = createRandomPool();
 			} catch (DataBaseConnectionException e) {
 				e.printStackTrace();
 			}
 		}
-		// These exceptions may be unneccesary now
+		
+		// These exceptions may be unnecessary now
 		if (moviePool == null) {
-			throw new RandomNotFoundException("moviePool is empty. Regenerate Pool");
+			throw new RandomNotFoundException(
+					"moviePool is empty. Regenerate Pool");
 		}
 		if (moviePool.isEmpty()) {
-			throw new RandomNotFoundException("moviePool is empty. Regenerate Pool");
+			throw new RandomNotFoundException(
+					"moviePool is empty. Regenerate Pool");
 		}
 		
 
-		// if there are movies in the pool generate a random movie from the pool
+		// If there are movies in the pool generate
+		// a random movie from the pool
 		Random rnd = new Random();
 		int index = rnd.nextInt(moviePool.size() - 1);
+		
 		return moviePool.get(index);
 	}
 
 	/**
 	 * Creates a randomized pool of movies from the users favorites and
-	 * watchlist. If createRandomPool throws a dataBaseConnectionException the
-	 * funtion waits for a time for a connection to potentially be esstablished.
-	 * The pool is then generated from popular movies.
+	 * watch list. If createRandomPool throws a dataBaseConnectionException
+	 * the function waits for a time for a connection to potentially be
+	 * established. The pool is then generated from popular movies.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	public void generatePool() {
 		try {
 			moviePool = createRandomPool();
 		} catch (RandomNotFoundException rd) {
-			// generate a pool from new releases and top movies
+			// Generate a pool from new releases and top movies
 			moviePool = createPoolWithoutUserData();
 		} catch (DataBaseConnectionException dbe) {
-			// will need to wait and generate pool
+			// Will need to wait and generate pool
 			try {
 				Thread.sleep(400);
 				moviePool = createPoolWithoutUserData();
@@ -132,44 +145,58 @@ public class TmdbRandomizer {
 	 * Generates a random movie pool from popular and top rated movies.
 	 * 
 	 * @param None
-	 * @return MoviePool Arraylist of random movies
+	 * @return MoviePool ArrayList of random movies
 	 */
 	private ArrayList<MovieDb> createPoolWithoutUserData() {
 		List<MovieDb> tmp;
+		
 		ArrayList<MovieDb> pool = new ArrayList<MovieDb>();
+		
 		tmp = movieObj.getPopularMovies("English", 1).getResults();
+		
 		for (MovieDb m : tmp) {
 			pool.add(m);
 		}
+		
 		tmp = movieObj.getTopRatedMovies("English", 1).getResults();
+		
 		for (MovieDb m : tmp) {
 			pool.add(m);
 		}
+		
 		return pool;
 	}
 
 	/**
-	 * Generates a random movie pool from the current users favorites and
-	 * 	watch list.
+	 * Generates a random movie pool from the
+	 * current users favorites and watch list.
 	 * 
 	 * @param None
-	 * @return MoviePool Arraylist of random movies
-	 * @throws RandomNotFoundException
-	 *             If the pool is empty
-	 * @throws DataBaseConnectionException
-	 *             If the users data cannot be referenced
+	 * @return MoviePool ArrayList of random movies
+	 * @throws RandomNotFoundException If the pool is empty
+	 * @throws DataBaseConnectionException If the users data
+	 *                                     cannot be referenced
 	 */
-	private ArrayList<MovieDb> createRandomPool() throws RandomNotFoundException, DataBaseConnectionException {
-		// Containers used to store database returns and final movie pool
+	private ArrayList<MovieDb> createRandomPool() 
+			throws RandomNotFoundException,
+			DataBaseConnectionException {
+		// Containers used to store database
+		// returns and final movie pool
 		List<MovieDb> tmp;
 		ArrayList<MovieDb> pool = new ArrayList<MovieDb>();
 		try {
-			if (movieWatchList != null && !movieWatchList.isEmpty()) {
+			if (movieWatchList != null
+					&& !movieWatchList.isEmpty()) {
+				
 				for (MovieDb i : movieWatchList) {
-					// retrieve similar movies for all in watchlist
-					tmp = movieObj.getSimilarMovies(i.getId(), "English", 1).getResults();
-					// if similar movies are found then they will be added to
-					// the pool
+					// Retrieve similar movies
+					// for all in watch list
+					tmp = movieObj.getSimilarMovies(
+							i.getId(), "English", 1)
+							.getResults();
+					
+					// If similar movies are found then
+					// they will be added to the pool
 					if (tmp != null && !tmp.isEmpty()) {
 						for (MovieDb m : tmp) {
 							pool.add(m);
@@ -178,12 +205,18 @@ public class TmdbRandomizer {
 				}
 			}
 
-			if (movieFavorites != null && !movieFavorites.isEmpty()) {
+			if (movieFavorites != null
+					&& !movieFavorites.isEmpty()) {
+				
 				for (MovieDb i : movieFavorites) {
-					// retrieve similar movies for all in favorites
-					tmp = movieObj.getSimilarMovies(i.getId(), "English", 1).getResults();
-					// if similar movies are found then they will be added to
-					// the pool
+					// Retrieve similar movies
+					// for all in favorites
+					tmp = movieObj.getSimilarMovies(
+							i.getId(), "English", 1)
+							.getResults();
+					
+					// If similar movies are found then
+					// they will be added to the pool
 					if (tmp != null && !tmp.isEmpty()) {
 						for (MovieDb m : tmp) {
 							pool.add(m);
@@ -197,29 +230,30 @@ public class TmdbRandomizer {
 		}
 
 		if (pool == null || pool.isEmpty()) {
-			// thrown when the final pool is empty
-			throw new RandomNotFoundException("WatchList and Favorites must be empty.");
+			// Thrown when the final pool is empty
+			throw new RandomNotFoundException(
+					"WatchList and Favorites"
+					+ "must be empty.");
 		}
+		
 		return pool;
 	}
 
 	/**
-	 * Updates local favorites list with data retrieved from database for
-	 * 	current user.
+	 * Updates local favorites list with data
+	 * retrieved from database for current user.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	private void updateFavorites() {
 		movieFavorites = user.getFavorites().getResults();
 	}
 
 	/**
-	 * Updates local watch list with data retrieved from database for current
-	 * 	user.
+	 * Updates local watch list with data retrieved
+	 * from database for current user.
 	 * 
 	 * @param None
-	 * @return None
 	 */
 	private void updateWatchList() {
 		movieWatchList = user.getWatchList().getResults();
@@ -228,12 +262,10 @@ public class TmdbRandomizer {
 	/**
 	 * Generates a movieObj for the current users API key.
 	 * 
-	 * @param ApiKey
-	 *            Provided to the java wrappers to link the movie object with
-	 *            the api
-	 * @return None
+	 * @param apiKey Provided to the java wrappers to link
+	 *               the movie object with the API
 	 */
-	private void createMoviesObj(TmdbApi apiKey) {
+	private void createMoviesObj(final TmdbApi apiKey) {
 		movieObj = new TmdbMovies(apiKey);
 	}
 }
