@@ -11,7 +11,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
  * 
  * @author Joseph Cutino
  * @version 1.0
- * @since 2016-07-07
+ * @since 2017-07-07
  */
 public class SearchModule extends TmdbSearch {
 

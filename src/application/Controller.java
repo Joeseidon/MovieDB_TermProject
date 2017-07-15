@@ -33,6 +33,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
  * This class is the action controller for the FXML file.
  * 
  * @author Josh Winfrey
+ * @author Joseph Cutino
  * @version 1.0
  * @since 2017-10-07
  */
