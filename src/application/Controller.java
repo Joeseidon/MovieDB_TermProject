@@ -334,7 +334,7 @@ public class Controller implements Initializable {
 		} catch (RandomNotFoundException e) {
 			JOptionPane.showInternalMessageDialog(null, 
 				"Error in Connection please wait"
-				+ "and try to randomize again.");
+				+ " and try to randomize again.");
 		}
 
 	}

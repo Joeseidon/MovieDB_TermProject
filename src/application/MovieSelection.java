@@ -167,7 +167,7 @@ public class MovieSelection {
 			// Video trailer not found
 			JOptionPane.showMessageDialog(
 					null, "There is not a trailer"
-					+ "associated with this movie.");
+					+ " associated with this movie.");
 		}
 	}
 
