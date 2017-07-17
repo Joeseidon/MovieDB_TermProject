@@ -22,7 +22,7 @@ public class App extends Application {
 			Parent root = FXMLLoader.load(getClass().
 				getResource("/application/MainScene.fxml"));
 			
-			primaryStage.setTitle("Movie Manager");
+			primaryStage.setTitle("Movie Gen 7000");
 			primaryStage.setScene(new Scene(root));
 			//primaryStage.setFullScreen(true);
 			primaryStage.show();
