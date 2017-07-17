@@ -74,7 +74,7 @@
          </font>
       </Button>
       <ListView fx:id="searchList" layoutX="612.0" layoutY="58.0" onMouseClicked="#selectedMovieFromSearchList" prefHeight="101.0" prefWidth="466.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
-      <Label fx:id="movieTitle" layoutX="845.0" layoutY="582.0" text="Label" />
+      <Label fx:id="movieTitle" layoutX="845.0" layoutY="582.0" text="Label" textFill="#43f707" />
       <CheckBox fx:id="titleCheck" layoutX="470.0" layoutY="24.0" mnemonicParsing="false" text="Title" textFill="#43f707">
          <font>
             <Font size="18.0" />
