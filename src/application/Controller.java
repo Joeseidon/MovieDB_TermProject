@@ -227,6 +227,11 @@ public class Controller implements Initializable {
 	 */
 	private final String newAccountPage = "https://www.themoviedb.org/"
 			+ "account/signup?language=en";
+	
+	/**
+	 * Object to hold the current count of controller objects created.
+	 */	
+	private static int i = 0;
 
 	/**
 	 * Overrides the initialization function which 
@@ -238,30 +243,31 @@ public class Controller implements Initializable {
 	@Override
 	public void initialize(final URL location, 
 			final ResourceBundle resources) {
-
-		try {
-			user = new MovieDBAccount();
-		} catch (DataBaseConnectionException e) {
-			// Connection Error
-			JOptionPane.showMessageDialog(null,
-					"Connection Error: " + e.getMessage() 
-					+ "\nCheck internet connection "
-					+ "and restart program.");
-			
-			// Close down the program
-			Platform.exit();
-			System.exit(0);
-		}
-		
-		usernameField.appendText(user.getUserName());
-		selected = new MovieSelection(user);
-		searchEngine = new SearchModule(user.getTmdbApi());
-		randMovieGen = new TmdbRandomizer(user);
-
 		webview = new WebView();
-		
-		generateFavandWatchlist();
+		if (i == 1) {
+			try {
+				user = new MovieDBAccount();
+			} catch (DataBaseConnectionException e) {
+				// Connection Error
+				JOptionPane.showMessageDialog(null,
+					"Connection Error: " 
+					+ e.getMessage() + "\nCheck "
+					+ "internet connection "
+					+ "and restart program.");
 
+				// Close down the program
+				Platform.exit();
+				System.exit(0);
+			}
+
+			usernameField.appendText(user.getUserName());
+			selected = new MovieSelection(user);
+			searchEngine = new SearchModule(user.getTmdbApi());
+			randMovieGen = new TmdbRandomizer(user);
+
+			generateFavandWatchlist();
+		}
+		i += 1;
 	}
 
 	/**
@@ -589,10 +595,11 @@ public class Controller implements Initializable {
 			Stage stage = (Stage) ((Node) event.getSource())
 					.getScene().getWindow();
 			stage.setScene(scene);
+			stage.centerOnScreen();			
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}		
 	}
 	
 	/**
