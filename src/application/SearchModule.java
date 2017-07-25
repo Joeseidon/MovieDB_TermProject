@@ -30,14 +30,14 @@ public class SearchModule extends TmdbSearch {
 	 * 
 	 * @param searchString Title to search for related movies with.
 	 * @param adult Used to keep results within user preference.
-	 * @param pages The number of result pages returned.
+	 * @param page Which page of results to retrieve.
 	 * @return searchResults Results found based on the provided criteria.
 	 */
 	public MovieResultsPage searchByMovieTitle(
 			final String searchString,
-			final boolean adult, final int pages) {
+			final boolean adult, final int page) {
 		
-		return super.searchMovie(searchString, 0, "en", adult, pages);
+		return super.searchMovie(searchString, 0, "en", adult, page);
 	}
 
 	/**
@@ -50,14 +50,14 @@ public class SearchModule extends TmdbSearch {
 	 * 
 	 * @param keywordSearchString User provided keyword to
 	 *                            search for related titles.
-	 * @param pages The number of result pages returned.
+	 * @param pages Which page of results to retrieve.
 	 * @return searchResults MultiListResultsPage which 
 	 *                       includes movies and TV shows.
 	 */
 	public MultiListResultsPage searchByKeyword(
-			final String keywordSearchString, final int pages) {
+			final String keywordSearchString, final int page) {
 		
-		return super.searchMulti(keywordSearchString, "English", pages);
+		return super.searchMulti(keywordSearchString, "English", page);
 	}
 
 }
