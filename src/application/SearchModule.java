@@ -50,7 +50,7 @@ public class SearchModule extends TmdbSearch {
 	 * 
 	 * @param keywordSearchString User provided keyword to
 	 *                            search for related titles.
-	 * @param pages Which page of results to retrieve.
+	 * @param page Which page of results to retrieve.
 	 * @return searchResults MultiListResultsPage which 
 	 *                       includes movies and TV shows.
 	 */

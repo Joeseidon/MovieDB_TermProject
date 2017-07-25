@@ -20,7 +20,7 @@ public class App extends Application {
 		try {
 			// Read file FXML and draw interface.
 			Parent root = FXMLLoader.load(getClass().
-				getResource("/application/MainScene.fxml"));
+				getResource("/application/login.fxml"));
 			
 			primaryStage.setTitle("Movie Gen 7000");
 			primaryStage.setScene(new Scene(root));
