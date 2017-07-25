@@ -11,8 +11,13 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -22,7 +27,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
@@ -68,6 +76,18 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private Button trailerButton;
+	
+	/**
+	 * Button for logging in.
+	 */
+	@FXML
+	private Button loginButton;
+	
+	/**
+	 * Button for creating a new API account.
+	 */
+	@FXML
+	private Button createAccountButton;
 
 	/**
 	 * ListView to hold the user's favorite list.
@@ -146,6 +166,18 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private TextField usernameField;
+	
+	/**
+	 * TextField to hold the login user-name.
+	 */
+	@FXML
+	private TextField usernameField1;
+	
+	/**
+	 * TextField to hold the login password.
+	 */
+	@FXML
+	private TextField passwordField;
 
 	/**
 	 * TextField to hold search title/keyword.
@@ -232,18 +264,28 @@ public class Controller implements Initializable {
 	private MovieCollections movieCollection;
 	
 	/**
-	 * Default page == first page of results list
+	 * Default page == first page of results list.
 	 */
 	private final int defaultPage = 1;
 	
 	/**
-	 * Collections
+	 * Collections.
 	 */
 	enum collections{
 		topRated,
 		nowPlaying,
 		upcoming
 	};
+	/**
+	 * Url for new API account.
+	 */
+	private final String newAccountPage = "https://www.themoviedb.org/"
+			+ "account/signup?language=en";
+	
+	/**
+	 * Object to hold the current count of controller objects created.
+	 */	
+	private static int i = 0;
 
 	/**
 	 * Overrides the initialization function which 
@@ -255,48 +297,52 @@ public class Controller implements Initializable {
 	@Override
 	public void initialize(final URL location, 
 			final ResourceBundle resources) {
-
-		try {
-			user = new MovieDBAccount();
-		} catch (DataBaseConnectionException e) {
-			// Connection Error
-			JOptionPane.showMessageDialog(null,
-					"Connection Error: " + e.getMessage() 
-					+ "\nCheck internet connection "
+		webview = new WebView();
+		if (i == 1) {
+			try {
+				user = new MovieDBAccount();
+			} catch (DataBaseConnectionException e) {
+				// Connection Error
+				JOptionPane.showMessageDialog(null,
+					"Connection Error: " 
+					+ e.getMessage() + "\nCheck "
+					+ "internet connection "
 					+ "and restart program.");
 			
-			// Close down the program
-			Platform.exit();
-			System.exit(0);
-		}
-		
-		usernameField.appendText(user.getUserName());
-		selected = new MovieSelection(user);
-		searchEngine = new SearchModule(user.getTmdbApi());
-		randMovieGen = new TmdbRandomizer(user);
-		movieCollection = new MovieCollections(user.getTmdbApi());
+				// Close down the program
+				Platform.exit();
+				System.exit(0);
+			}
 
-		webview = new WebView();
-		
-		generateFavandWatchlist();
-		
-		DisplayCollection(collections.nowPlaying,defaultPage);
-		DisplayCollection(collections.topRated,defaultPage);
-		DisplayCollection(collections.upcoming,defaultPage);
+			usernameField.appendText(user.getUserName());
+			selected = new MovieSelection(user);
+			searchEngine = new SearchModule(user.getTmdbApi());
+			randMovieGen = new TmdbRandomizer(user);
+			movieCollection = new MovieCollections(user.getTmdbApi());
+
+			webview = new WebView();
+
+			generateFavandWatchlist();
+
+			DisplayCollection(collections.nowPlaying, defaultPage);
+			DisplayCollection(collections.topRated, defaultPage);
+			DisplayCollection(collections.upcoming, defaultPage);
+		}
+		i += 1;
 	}
 	
 	
-	public void DisplayCollection(collections current, int page){
-		if(current == collections.nowPlaying){
-		nowPlayingListDic = generateDictionaryandDisplay(movieCollection.getNowPlaying(page),inTheatersNowList);
-		}else if(current == collections.topRated){
-		topRatedListDic = generateDictionaryandDisplay(movieCollection.getTopRated(page),topRatedList);
-		}else if(current == collections.upcoming){
+	public void DisplayCollection (collections current, int page) {
+		if (current == collections.nowPlaying) {
+		nowPlayingListDic = generateDictionaryandDisplay(movieCollection.getNowPlaying(page), inTheatersNowList);
+		} else if (current == collections.topRated) {
+		topRatedListDic = generateDictionaryandDisplay(movieCollection.getTopRated(page), topRatedList);
+		} else if (current == collections.upcoming) {
 		upcomingListDic = generateDictionaryandDisplay(movieCollection.getUpcoming(page), upcomingList);
 		}
 	}
 	
-	private Hashtable<String, MovieDb> generateDictionaryandDisplay(MovieResultsPage results,ListView<String> frame){
+	private Hashtable<String, MovieDb> generateDictionaryandDisplay(MovieResultsPage results, ListView<String> frame){
 		ObservableList<String> data = FXCollections.
 				observableArrayList();
 		Hashtable<String, MovieDb> tmp = new Hashtable<String, MovieDb>();
@@ -681,5 +727,65 @@ public class Controller implements Initializable {
 		watchListDic = generateDictionaryandDisplay(user.getWatchList(),watchList);
 		favoriteListDic = generateDictionaryandDisplay(user.getFavorites(),favoriteList);
 		
+	}
+	
+	/**
+	 * Function for logging in to user's API account.
+	 * 
+	 * @param event Button press
+	 */
+	//@SuppressWarnings("unused")
+	public void checkLogin(final ActionEvent event) {
+		try {
+			Parent parent = FXMLLoader.load(getClass()
+					.getResource("MainScene.fxml"));
+			Scene scene = new Scene(parent);
+			Stage stage = (Stage) ((Node) event.getSource())
+					.getScene().getWindow();
+			stage.setScene(scene);
+			stage.centerOnScreen();			
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	/**
+	 * Function for creating a new API account.
+	 * 
+	 * @param event Button press
+	 */
+	//@SuppressWarnings("unused")
+	public void newAPIAccount(final ActionEvent event) {
+		try {
+			webview.getEngine().load(newAccountPage);
+
+			Stage stage = new Stage();
+
+			AnchorPane root = new AnchorPane();
+			AnchorPane.setBottomAnchor(webview, 0.0);
+			AnchorPane.setTopAnchor(webview, 0.0);
+			AnchorPane.setLeftAnchor(webview, 0.0);
+			AnchorPane.setRightAnchor(webview, 0.0);
+
+			root.getChildren().add(webview);
+
+			stage.setTitle("New Account");
+			Scene account = new Scene(root, 1400, 800);
+			stage.setScene(account);
+			stage.centerOnScreen();
+			stage.show();
+
+			stage.setOnCloseRequest(new 
+					EventHandler<WindowEvent>() {
+				@Override
+				public void handle(final WindowEvent event) {
+					webview.getEngine().load(null);
+				}
+			});
+		} catch (IndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(null, 
+					"Could not load page.");
+		}
 	}
 }
