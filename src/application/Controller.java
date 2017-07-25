@@ -86,6 +86,24 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private ListView<String> searchList;
+	
+	/**
+	 * ListView to hold the user's watch list.
+	 */
+	@FXML
+	private ListView<String> inTheatersNowList;
+	
+	/**
+	 * ListView to hold the user's watch list.
+	 */
+	@FXML
+	private ListView<String> topRatedList;
+	
+	/**
+	 * ListView to hold the user's watch list.
+	 */
+	@FXML
+	private ListView<String> upcomingList;
 
 	/**
 	 * ImageView to hold the movies image.
@@ -189,6 +207,43 @@ public class Controller implements Initializable {
 	 */
 	private Hashtable<String, MovieDb> searchListDic = 
 			new Hashtable<String, MovieDb>();
+	
+	/**
+	 * Object to hold the top rated results.
+	 */
+	private Hashtable<String, MovieDb> topRatedListDic = 
+			new Hashtable<String, MovieDb>();
+	
+	/**
+	 * Object to hold the upcoming results.
+	 */
+	private Hashtable<String, MovieDb> upcomingListDic = 
+			new Hashtable<String, MovieDb>();
+	
+	/**
+	 * Object to hold the now playing results.
+	 */
+	private Hashtable<String, MovieDb> nowPlayingListDic = 
+			new Hashtable<String, MovieDb>();
+	
+	/**
+	 * Object used to pull movie collections.
+	 */
+	private MovieCollections movieCollection;
+	
+	/**
+	 * Default page == first page of results list
+	 */
+	private final int defaultPage = 1;
+	
+	/**
+	 * Collections
+	 */
+	enum collections{
+		topRated,
+		nowPlaying,
+		upcoming
+	};
 
 	/**
 	 * Overrides the initialization function which 
@@ -219,11 +274,41 @@ public class Controller implements Initializable {
 		selected = new MovieSelection(user);
 		searchEngine = new SearchModule(user.getTmdbApi());
 		randMovieGen = new TmdbRandomizer(user);
+		movieCollection = new MovieCollections(user.getTmdbApi());
 
 		webview = new WebView();
 		
 		generateFavandWatchlist();
-
+		
+		DisplayCollection(collections.nowPlaying,defaultPage);
+		DisplayCollection(collections.topRated,defaultPage);
+		DisplayCollection(collections.upcoming,defaultPage);
+	}
+	
+	
+	public void DisplayCollection(collections current, int page){
+		if(current == collections.nowPlaying){
+		nowPlayingListDic = generateDictionaryandDisplay(movieCollection.getNowPlaying(page),inTheatersNowList);
+		}else if(current == collections.topRated){
+		topRatedListDic = generateDictionaryandDisplay(movieCollection.getTopRated(page),topRatedList);
+		}else if(current == collections.upcoming){
+		upcomingListDic = generateDictionaryandDisplay(movieCollection.getUpcoming(page), upcomingList);
+		}
+	}
+	
+	private Hashtable<String, MovieDb> generateDictionaryandDisplay(MovieResultsPage results,ListView<String> frame){
+		ObservableList<String> data = FXCollections.
+				observableArrayList();
+		Hashtable<String, MovieDb> tmp = new Hashtable<String, MovieDb>();
+		
+		Iterator<MovieDb> itr = results.iterator();
+		while (itr.hasNext()) {
+			MovieDb movie = itr.next();
+			data.add(movie.toString());
+			tmp.put(movie.toString(), movie);
+		}
+		frame.setItems(data);
+		return tmp;
 	}
 
 	/**
@@ -279,6 +364,60 @@ public class Controller implements Initializable {
 			displaySelectedMovie();
 		}
 	}
+	
+	/**
+	 * Allows users to click on items in the top rated
+	 * list and displays them in the window.
+	 * 
+	 * @param event Mouse click
+	 */
+	public void selectedMovieFromTopRatedList(final MouseEvent event) {
+		String selectedTitle = topRatedList.getSelectionModel()
+				.getSelectedItem();
+		
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(
+					topRatedListDic.get(selectedTitle));
+			
+			displaySelectedMovie();
+		}
+	}
+	
+	/**
+	 * Allows users to click on items in the in theaters now
+	 * list and displays them in the window.
+	 * 
+	 * @param event Mouse click
+	 */
+	public void selectedMovieFromInTheatersNowList(final MouseEvent event) {
+		String selectedTitle = inTheatersNowList.getSelectionModel()
+				.getSelectedItem();
+		
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(
+					nowPlayingListDic.get(selectedTitle));
+			
+			displaySelectedMovie();
+		}
+	}
+	
+	/**
+	 * Allows users to click on items in the upcoming
+	 * list and displays them in the window.
+	 * 
+	 * @param event Mouse click
+	 */
+	public void selectedMovieFromUpcomingList(final MouseEvent event) {
+		String selectedTitle = upcomingList.getSelectionModel()
+				.getSelectedItem();
+		
+		if (selectedTitle != null) {
+			selected.setSelectedMovie(
+					upcomingListDic.get(selectedTitle));
+			
+			displaySelectedMovie();
+		}
+	}
 
 	/**
 	 * Displays the selected movie in the window.
@@ -294,11 +433,14 @@ public class Controller implements Initializable {
 					+ "uploads/2015/09/slider1-bg.png");
 			imageField.setImage(img);
 		}
-
+/*
 		movieTitle.setText("Title: " 
 				+ selected.getSelectedMovie().getTitle());
+				*/
 		
 		descriptionField.clear();
+		descriptionField.appendText("Movie Title: " 
+				+ selected.getSelectedMovie().getTitle() + "\n");
 		descriptionField.appendText("Movie Description: " 
 				+ selected.getSelectedMovie().getOverview());
 	}
@@ -348,11 +490,11 @@ public class Controller implements Initializable {
 	public void searchMovie(final ActionEvent event) {
 		if (titleCheck.isSelected() && !keywordCheck.isSelected()) {
 			searchResultsToDisplay(searchEngine.searchByMovieTitle(
-				searchField.getText(), false, 2));
+				searchField.getText(), false, 1));
 		} else if (keywordCheck.isSelected() 
 				&& !titleCheck.isSelected()) {
 			searchResultsToDisplay(searchEngine.searchByKeyword(
-				searchField.getText(), 2));
+				searchField.getText(), 1));
 		} else {
 			JOptionPane.showMessageDialog(null, 
 				"Please select either Title or Keyword");
@@ -508,7 +650,7 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void generateFavandWatchlist() {
-		ObservableList<String> watchdata = FXCollections.
+		/*ObservableList<String> watchdata = FXCollections.
 				observableArrayList();
 		
 		ObservableList<String> favoritedata = FXCollections.
@@ -534,6 +676,10 @@ public class Controller implements Initializable {
 			favoriteListDic.put(movie.toString(), movie);
 		}
 
-		favoriteList.setItems(favoritedata);
+		favoriteList.setItems(favoritedata);*/
+		
+		watchListDic = generateDictionaryandDisplay(user.getWatchList(),watchList);
+		favoriteListDic = generateDictionaryandDisplay(user.getFavorites(),favoriteList);
+		
 	}
 }
