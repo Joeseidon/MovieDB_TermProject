@@ -61,7 +61,7 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextArea fx:id="descriptionField" layoutX="402.0" layoutY="619.0" prefHeight="136.0" prefWidth="609.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" wrapText="true">
+      <TextArea fx:id="descriptionField" editable="false" layoutX="402.0" layoutY="619.0" prefHeight="136.0" prefWidth="609.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" wrapText="true">
          <font>
             <Font size="20.0" />
          </font></TextArea>
