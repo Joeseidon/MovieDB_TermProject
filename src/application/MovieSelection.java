@@ -168,6 +168,10 @@ public class MovieSelection {
 			JOptionPane.showMessageDialog(
 					null, "There is not a trailer"
 					+ " associated with this movie.");
+		} catch (NullPointerException nullEx){
+			//A movie needs to be selected
+			JOptionPane.showMessageDialog(
+					null, "Please select a movie");
 		}
 	}
 
