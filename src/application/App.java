@@ -24,7 +24,7 @@ public class App extends Application {
 			
 			primaryStage.setTitle("Movie Gen 7000");
 			primaryStage.setScene(new Scene(root));
-			//primaryStage.setFullScreen(true);
+			primaryStage.setResizable(false);
 			primaryStage.show();
 			
 		} catch (Exception e) {

@@ -192,10 +192,10 @@ public class Controller implements Initializable {
 	private TextArea descriptionField;
 
 	/**
-	 * Label to hold movie title.
+	 * Label to hold the error message on login failure.
 	 */
 	@FXML
-	private Label movieTitle;
+	private Label errorLabel;
 	
 	/**
 	 * Object for the user's account information.
@@ -286,6 +286,16 @@ public class Controller implements Initializable {
 	 * Object to hold the current count of controller objects created.
 	 */	
 	private static int i = 0;
+	
+	/**
+	 * String to hold the user's user-name.
+	 */
+	private static String username;
+	
+	/**
+	 * String to hold the user's password.
+	 */
+	private static String password;
 
 	/**
 	 * Overrides the initialization function which 
@@ -300,7 +310,7 @@ public class Controller implements Initializable {
 		webview = new WebView();
 		if (i == 1) {
 			try {
-				user = new MovieDBAccount();
+				user = new MovieDBAccount(username, password);
 			} catch (DataBaseConnectionException e) {
 				// Connection Error
 				JOptionPane.showMessageDialog(null,
@@ -328,7 +338,7 @@ public class Controller implements Initializable {
 			DisplayCollection(collections.topRated, defaultPage);
 			DisplayCollection(collections.upcoming, defaultPage);
 		}
-		i += 1;
+		//i += 1;
 	}
 	
 	
@@ -488,7 +498,7 @@ public class Controller implements Initializable {
 		descriptionField.appendText("Movie Title: " 
 				+ selected.getSelectedMovie().getTitle() + "\n");
 		descriptionField.appendText("Movie Description: " 
-				+ selected.getSelectedMovie().getOverview());
+				+ selected.getSelectedMovie().getOverview() + "\n");
 	}
 
 	/**
@@ -724,8 +734,10 @@ public class Controller implements Initializable {
 
 		favoriteList.setItems(favoritedata);*/
 		
-		watchListDic = generateDictionaryandDisplay(user.getWatchList(),watchList);
-		favoriteListDic = generateDictionaryandDisplay(user.getFavorites(),favoriteList);
+		watchListDic = generateDictionaryandDisplay(
+				user.getWatchList(), watchList);
+		favoriteListDic = generateDictionaryandDisplay(
+				user.getFavorites(), favoriteList);
 		
 	}
 	
@@ -736,18 +748,44 @@ public class Controller implements Initializable {
 	 */
 	//@SuppressWarnings("unused")
 	public void checkLogin(final ActionEvent event) {
+		username = usernameField1.getText();
+		password = passwordField.getText();
+		MovieDBAccount temp = null;
+		
 		try {
-			Parent parent = FXMLLoader.load(getClass()
-					.getResource("MainScene.fxml"));
-			Scene scene = new Scene(parent);
-			Stage stage = (Stage) ((Node) event.getSource())
-					.getScene().getWindow();
-			stage.setScene(scene);
-			stage.centerOnScreen();			
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+			temp = new MovieDBAccount(username, password);
+		} catch (DataBaseConnectionException e) {
+			// Do nothing here
+		}
+		if(temp != null){
+			Controller.i = 1;
+			try {
+				Parent parent = FXMLLoader.load(getClass()
+						.getResource("MainScene.fxml"));
+				Scene scene = new Scene(parent);
+				Stage stage = (Stage) ((Node) event.getSource())
+						.getScene().getWindow();
+				stage.setScene(scene);
+				stage.centerOnScreen();			
+				stage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
+		}
+		else {
+			if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == true){
+				errorLabel.setText("No username and no Password.");
+			}
+			else if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == false){
+				errorLabel.setText("No username.");
+			}
+			else if(usernameField1.getText().isEmpty() == false && passwordField.getText().isEmpty() == true){
+				errorLabel.setText("No password.");
+			}
+			else{
+				errorLabel.setText("Invalid login.");
+			}
+		}
 	}
 	
 	/**

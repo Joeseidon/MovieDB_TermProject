@@ -56,12 +56,12 @@ public class MovieDBAccount {
 	 * @exception DataBaseConnectionException
 	 * 	             	Exception for when database can't connect
 	 */
-	public MovieDBAccount() throws DataBaseConnectionException {
+	public MovieDBAccount(String username, String password) throws DataBaseConnectionException {
 		try {
 			tmdbApi = new TmdbApi(
 					"3c55a927fbd8c6990313cb6d5de43d62");
 			
-			sessionToken = getSessionToken();
+			sessionToken = getSessionToken(username, password);
 			
 			tmdbAccount = tmdbApi.getAccount();
 			act = tmdbAccount.getAccount(sessionToken);
@@ -80,6 +80,9 @@ public class MovieDBAccount {
 	 * @return userName Name of the current user
 	 */
 	public String getUserName() {
+		if(act.getName().isEmpty() == true){
+			return act.getUserName();
+		}
 		return act.getName();
 	}
 
@@ -163,10 +166,10 @@ public class MovieDBAccount {
 	 * @return SessionToken Session token for the current users
 	 *                      session with the movie manager
 	 */
-	private SessionToken getSessionToken() {
+	private SessionToken getSessionToken(String username, String password) {
 		TmdbAuthentication tmdbAuth = tmdbApi.getAuthentication();
 		TokenSession tokenSession = tmdbAuth.getSessionLogin(
-				"cutinoj", "Gv$u2017Temp");
+				username, password);
 		
 		SessionToken sessionToken = new SessionToken(
 				tokenSession.getSessionId());

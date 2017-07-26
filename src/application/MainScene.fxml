@@ -90,7 +90,7 @@
       <Label layoutX="1072.0" layoutY="11.0" text="In Theaters Now" textFill="#43f707" />
       <Label layoutX="1076.0" layoutY="276.0" text="Top Rated Movies" textFill="#43f707" />
       <Separator layoutX="1036.0" orientation="VERTICAL" prefHeight="763.0" prefWidth="5.0" />
-      <Label layoutX="1080.0" layoutY="541.0" text="Upcoming Movies" textFill="#43f707" />
+      <Label layoutX="1076.0" layoutY="538.0" text="Upcoming Movies" textFill="#43f707" />
       <ListView fx:id="upcomingList" editable="true" layoutX="1063.0" layoutY="561.0" onMouseClicked="#selectedMovieFromUpcomingList" prefHeight="190.0" prefWidth="303.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
    </children>
 </AnchorPane>

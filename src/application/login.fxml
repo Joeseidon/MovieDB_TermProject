@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="153.0" prefWidth="238.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane prefHeight="153.0" prefWidth="273.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <TextField fx:id="usernameField1" layoutX="78.0" layoutY="14.0" promptText="Username" />
+      <TextField fx:id="usernameField1" layoutX="96.0" layoutY="14.0" onAction="#checkLogin" promptText="Username" />
       <Label layoutX="14.0" layoutY="18.0" text="Username:" />
       <Label layoutX="15.0" layoutY="55.0" text="Password:" />
-      <PasswordField fx:id="passwordField" layoutX="78.0" layoutY="51.0" promptText="Password" />
-      <Button fx:id="loginButton" layoutX="78.0" layoutY="114.0" mnemonicParsing="false" onAction="#checkLogin" text="Login" />
-      <Button fx:id="createAccountButton" layoutX="129.0" layoutY="114.0" mnemonicParsing="false" onAction="#newAPIAccount" text="Create Account" />
-      <Label alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="82.0" layoutY="86.0" text="No Username or Password" textAlignment="CENTER" textFill="#fc0000" AnchorPane.bottomAnchor="50.0" AnchorPane.topAnchor="86.0" />
+      <PasswordField fx:id="passwordField" layoutX="96.0" layoutY="51.0" onAction="#checkLogin" promptText="Password" />
+      <Button fx:id="loginButton" layoutX="96.0" layoutY="114.0" mnemonicParsing="false" onAction="#checkLogin" text="Login" />
+      <Button fx:id="createAccountButton" layoutX="147.0" layoutY="114.0" mnemonicParsing="false" onAction="#newAPIAccount" text="Create Account" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="85.0" layoutY="86.0" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="16.0" />
    </children>
 </AnchorPane>
