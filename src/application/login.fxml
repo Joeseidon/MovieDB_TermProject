@@ -12,8 +12,8 @@
       <Label layoutX="14.0" layoutY="18.0" text="Username:" />
       <Label layoutX="15.0" layoutY="55.0" text="Password:" />
       <PasswordField fx:id="passwordField" layoutX="96.0" layoutY="51.0" onAction="#checkLogin" promptText="Password" />
-      <Button fx:id="loginButton" layoutX="96.0" layoutY="114.0" mnemonicParsing="false" onAction="#checkLogin" text="Login" />
-      <Button fx:id="createAccountButton" layoutX="147.0" layoutY="114.0" mnemonicParsing="false" onAction="#newAPIAccount" text="Create Account" />
+      <Button fx:id="loginButton" focusTraversable="false" layoutX="96.0" layoutY="114.0" mnemonicParsing="false" onAction="#checkLogin" text="Login" />
+      <Button fx:id="createAccountButton" focusTraversable="false" layoutX="147.0" layoutY="114.0" mnemonicParsing="false" onAction="#newAPIAccount" text="Create Account" />
       <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="85.0" layoutY="86.0" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="16.0" />
    </children>
 </AnchorPane>

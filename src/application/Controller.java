@@ -20,8 +20,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -198,6 +202,36 @@ public class Controller implements Initializable {
 	private Label errorLabel;
 	
 	/**
+	 * 
+	 */
+	@FXML
+	private ComboBox<String> filterList;
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private TextField filterField;
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private MenuButton activeFilters;
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private Button addFilterButton;
+	
+	/**
+	 * 
+	 */
+	@FXML
+	private Button removeFilterButton;
+	
+	/**
 	 * Object for the user's account information.
 	 */
 	private MovieDBAccount user;
@@ -333,6 +367,8 @@ public class Controller implements Initializable {
 			webview = new WebView();
 
 			generateFavandWatchlist();
+			
+			generateFilterList();
 
 			DisplayCollection(collections.nowPlaying, defaultPage);
 			DisplayCollection(collections.topRated, defaultPage);
@@ -522,12 +558,7 @@ public class Controller implements Initializable {
 			MovieDb rand = randMovieGen.getRandomMovie();
 			selected.setSelectedMovie(rand);
 			
-			Image img = new Image(selected.getImageURL());
-			imageField.setImage(img);
-
-			descriptionField.clear();
-			descriptionField.appendText(selected.getSelectedMovie()
-					.getOverview());
+			displaySelectedMovie();
 
 		} catch (RandomNotFoundException e) {
 			JOptionPane.showInternalMessageDialog(null, 
@@ -824,6 +855,52 @@ public class Controller implements Initializable {
 		} catch (IndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(null, 
 					"Could not load page.");
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	private void generateFilterList(){
+		filterList.getItems().addAll("Year", "Genre", "Actor");
+	}
+	
+	/**
+	 * Function for adding a filter to the search.
+	 * 
+	 * @param event Button press
+	 */
+	public void addFilter(final ActionEvent event){
+		if(!filterField.getText().isEmpty() && filterList.getValue() != null){
+			CheckMenuItem filter = new CheckMenuItem(filterList.getValue() + ": " + filterField.getText());
+			activeFilters.getItems().add(filter);
+		}
+		else if(filterList.getValue() == null){
+			JOptionPane.showMessageDialog(null, "Please select a filter type from the list.");
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Please enter somthing for the filter.");
+		}
+	}
+	
+	/**
+	 * Function for removing filters from the search.
+	 * 
+	 * @param event Button press
+	 */
+	public void removeFilter(final ActionEvent event){
+		ObservableList<MenuItem> tempList = activeFilters.getItems();
+		ObservableList<CheckMenuItem> addList = FXCollections.observableArrayList();
+		for(int j=0; j<tempList.size(); j++){
+			CheckMenuItem tempItem = (CheckMenuItem) tempList.get(j);
+			if(!tempItem.isSelected()){
+				addList.add(tempItem);
+			}
+		}
+		activeFilters.getItems().clear();
+		while(!addList.isEmpty()){
+			activeFilters.getItems().addAll(addList.get(0));
+			addList.remove(0);
 		}
 	}
 }

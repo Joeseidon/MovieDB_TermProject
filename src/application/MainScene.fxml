@@ -16,27 +16,27 @@
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1374.0" style="-fx-background-image: url(&quot;http://npsapps.com/wp-content/uploads/2015/09/slider1-bg.png&quot;);;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <ListView fx:id="favoriteList" editable="true" layoutX="29.0" layoutY="125.0" onMouseClicked="#selectedMovieFromFavoriteList" prefHeight="266.0" prefWidth="316.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
-      <Button fx:id="randomButton" layoutX="142.0" layoutY="710.0" mnemonicParsing="false" onAction="#randomMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Random">
+      <Button fx:id="randomButton" focusTraversable="false" layoutX="142.0" layoutY="710.0" mnemonicParsing="false" onAction="#randomMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Random">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="addButton" layoutX="391.0" layoutY="403.0" mnemonicParsing="false" onAction="#addMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Add">
+      <Button fx:id="addButton" focusTraversable="false" layoutX="391.0" layoutY="403.0" mnemonicParsing="false" onAction="#addMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Add">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="removeButton" layoutX="391.0" layoutY="453.0" mnemonicParsing="false" onAction="#removeMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Remove">
+      <Button fx:id="removeButton" focusTraversable="false" layoutX="391.0" layoutY="453.0" mnemonicParsing="false" onAction="#removeMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Remove">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="searchButton" layoutX="513.0" layoutY="21.0" mnemonicParsing="false" onAction="#searchMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Search">
+      <Button fx:id="searchButton" focusTraversable="false" layoutX="514.0" layoutY="15.0" mnemonicParsing="false" onAction="#searchMovie" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="imageField" fitHeight="400.0" fitWidth="267.0" layoutX="598.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageField" fitHeight="400.0" fitWidth="267.0" layoutX="609.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true" />
       <CheckBox fx:id="favoriteCheckBox" layoutX="392.0" layoutY="334.0" mnemonicParsing="false" text="Favorite List" textFill="#43f707">
          <font>
             <Font size="18.0" />
@@ -56,25 +56,25 @@
          </font></TextField>
       <ListView fx:id="watchList" editable="true" layoutX="28.0" layoutY="421.0" onMouseClicked="#selectedMovieFromWatchList" prefHeight="266.0" prefWidth="316.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
       <Label layoutX="156.0" layoutY="24.0" text="User Name" textFill="#43f707" />
-      <TextField fx:id="searchField" layoutX="618.0" layoutY="24.0" onAction="#searchMovie" prefHeight="39.0" prefWidth="358.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" AnchorPane.leftAnchor="618.0">
+      <TextField fx:id="searchField" layoutX="619.0" layoutY="18.0" onAction="#searchMovie" prefHeight="39.0" prefWidth="396.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextArea fx:id="descriptionField" editable="false" layoutX="402.0" layoutY="619.0" prefHeight="136.0" prefWidth="609.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" wrapText="true">
+      <TextArea fx:id="descriptionField" editable="false" layoutX="398.0" layoutY="638.0" prefHeight="117.0" prefWidth="613.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" wrapText="true">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
          </font></TextArea>
       <Label layoutX="154.0" layoutY="108.0" text="Favorite List" textFill="#43f707" />
       <Label layoutX="159.0" layoutY="404.0" text="Watch List" textFill="#43f707" />
       <Separator layoutX="367.0" layoutY="-2.0" orientation="VERTICAL" prefHeight="768.0" prefWidth="5.0" />
-      <Separator layoutX="368.0" layoutY="175.0" prefHeight="17.0" prefWidth="671.0" />
-      <Button fx:id="trailerButton" layoutX="391.0" layoutY="503.0" mnemonicParsing="false" onAction="#trailerSelected" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Trailer">
+      <Separator layoutX="367.0" layoutY="213.0" prefHeight="17.0" prefWidth="671.0" />
+      <Button fx:id="trailerButton" focusTraversable="false" layoutX="391.0" layoutY="503.0" mnemonicParsing="false" onAction="#trailerSelected" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Trailer">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ListView fx:id="searchList" layoutX="512.0" layoutY="72.0" onMouseClicked="#selectedMovieFromSearchList" prefHeight="101.0" prefWidth="466.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
+      <ListView fx:id="searchList" layoutX="513.0" layoutY="66.0" onMouseClicked="#selectedMovieFromSearchList" prefHeight="101.0" prefWidth="502.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
       <CheckBox fx:id="titleCheck" layoutX="383.0" layoutY="43.0" mnemonicParsing="false" text="Title" textFill="#43f707">
          <font>
             <Font size="18.0" />
@@ -92,5 +92,19 @@
       <Separator layoutX="1036.0" orientation="VERTICAL" prefHeight="763.0" prefWidth="5.0" />
       <Label layoutX="1076.0" layoutY="538.0" text="Upcoming Movies" textFill="#43f707" />
       <ListView fx:id="upcomingList" editable="true" layoutX="1063.0" layoutY="561.0" onMouseClicked="#selectedMovieFromUpcomingList" prefHeight="190.0" prefWidth="303.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;" />
+      <ComboBox fx:id="filterList" focusTraversable="false" layoutX="513.0" layoutY="176.0" prefHeight="39.0" prefWidth="92.0" promptText="Filter List" />
+      <TextField fx:id="filterField" layoutX="612.0" layoutY="176.0" onAction="#addFilter" prefHeight="39.0" prefWidth="99.0" style="-fx-background-color: #c3c4c4,        linear-gradient(#d6d6d6 50%, white 100%),        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);;">
+         <font>
+            <Font size="18.0" />
+         </font></TextField>
+      <MenuButton fx:id="activeFilters" focusTraversable="false" layoutX="718.0" layoutY="176.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="99.0" text="Active Filters" />
+      <Button fx:id="addFilterButton" focusTraversable="false" layoutX="824.0" layoutY="176.0" mnemonicParsing="false" onAction="#addFilter" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Add">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="removeFilterButton" focusTraversable="false" layoutX="906.0" layoutY="176.0" mnemonicParsing="false" onAction="#removeFilter" style="-fx-background-color: #090a0c,        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),        linear-gradient(#20262b, #191d22),        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));; -fx-background-radius: 5,4,3,5;; -fx-background-insets: 0,1,2,0;; -fx-text-fill: white;; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );; -fx-font-family: &quot;Arial&quot;;; -fx-text-fill: linear-gradient(white, #d0d0d0);; -fx-padding: 10 20 10 20;;" text="Remove">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>
