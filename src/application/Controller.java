@@ -128,6 +128,12 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private ListView<String> upcomingList;
+	
+	/**
+	 * ListView to hold movie reviews.
+	 */
+	@FXML
+	private ListView<String> reviewList;
 
 	/**
 	 * ImageView to hold the movies image.
@@ -202,34 +208,46 @@ public class Controller implements Initializable {
 	private Label errorLabel;
 	
 	/**
-	 * 
+	 * ComboBox to hold filter options.
 	 */
 	@FXML
 	private ComboBox<String> filterList;
 	
 	/**
-	 * 
+	 * TextField to hold the filter.
 	 */
 	@FXML
 	private TextField filterField;
 	
 	/**
-	 * 
+	 * MenuButton to hold the active filters.
 	 */
 	@FXML
 	private MenuButton activeFilters;
 	
 	/**
-	 * 
+	 * Button to add filter.
 	 */
 	@FXML
 	private Button addFilterButton;
 	
 	/**
-	 * 
+	 * Button to remove filter(s).
 	 */
 	@FXML
 	private Button removeFilterButton;
+	
+	/**
+	 * Button to change search page up one.
+	 */
+	@FXML
+	private Button searchPageUpButton;
+	
+	/**
+	 * Button to change search page down one.
+	 */
+	@FXML
+	private Button searchPageDownButton;
 	
 	/**
 	 * Object for the user's account information.
@@ -301,6 +319,11 @@ public class Controller implements Initializable {
 	 * Default page == first page of results list.
 	 */
 	private final int defaultPage = 1;
+	
+	/**
+	 * Current page of the search.
+	 */
+	private static int currentPage = 1;
 	
 	/**
 	 * Collections.
@@ -525,16 +548,14 @@ public class Controller implements Initializable {
 					+ "uploads/2015/09/slider1-bg.png");
 			imageField.setImage(img);
 		}
-/*
-		movieTitle.setText("Title: " 
-				+ selected.getSelectedMovie().getTitle());
-				*/
 		
 		descriptionField.clear();
 		descriptionField.appendText("Movie Title: " 
 				+ selected.getSelectedMovie().getTitle() + "\n");
 		descriptionField.appendText("Movie Description: " 
 				+ selected.getSelectedMovie().getOverview() + "\n");
+
+		
 	}
 
 	/**
@@ -805,7 +826,7 @@ public class Controller implements Initializable {
 		}
 		else {
 			if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == true){
-				errorLabel.setText("No username and no Password.");
+				errorLabel.setText("No username and no password.");
 			}
 			else if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == false){
 				errorLabel.setText("No username.");
@@ -903,4 +924,51 @@ public class Controller implements Initializable {
 			addList.remove(0);
 		}
 	}
+	
+	/**
+	 * Function to change search page up one.
+	 * 
+	 * @param event Button press
+	 */
+	public void searchPageUp(ActionEvent event){
+		if(!searchList.getItems().isEmpty()){
+			Controller.currentPage += 1;
+			if(titleCheck.isSelected()){
+				searchResultsToDisplay(searchEngine.searchByMovieTitle(
+						searchField.getText(), false, currentPage));
+			}
+			else {
+				searchResultsToDisplay(searchEngine.searchByKeyword(
+						searchField.getText(), currentPage));
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No search has been done.");
+		}
+	}
+	
+	/**
+	 * Function to change search page down one.
+	 * 
+	 * @param event Button press
+	 */
+	public void searchPageDown(ActionEvent event){
+		if(!searchList.getItems().isEmpty()){
+			currentPage -= 1;
+			if(currentPage < defaultPage){
+				currentPage = defaultPage;
+			}
+			if(titleCheck.isSelected()){
+				searchResultsToDisplay(searchEngine.searchByMovieTitle(
+						searchField.getText(), false, currentPage));
+			}
+			else {
+				searchResultsToDisplay(searchEngine.searchByKeyword(
+						searchField.getText(), currentPage));
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "No search has been done.");
+		}
+	}	
 }
