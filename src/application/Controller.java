@@ -35,10 +35,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbReviews;
+import info.movito.themoviedbapi.TmdbReviews.ReviewResultsPage;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.Multi.MediaType;
+//import info.movito.themoviedbapi.model.Reviews;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
