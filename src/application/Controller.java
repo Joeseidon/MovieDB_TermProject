@@ -32,6 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -252,6 +253,12 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private Button searchPageDownButton;
+	
+	/**
+	 * Label for movie rating.
+	 */
+	@FXML
+	private Label movieRating;
 	
 	/**
 	 * Object for the user's account information.
@@ -557,9 +564,18 @@ public class Controller implements Initializable {
 		descriptionField.appendText("Movie Title: " 
 				+ selected.getSelectedMovie().getTitle() + "\n");
 		descriptionField.appendText("Movie Description: " 
-				+ selected.getSelectedMovie().getOverview() + "\n");
-
+				+ selected.getSelectedMovie().getOverview());
 		
+		if (selected.getSelectedMovie().getVoteAverage() < 5.5) {
+			movieRating.setTextFill(Color.web("#ff0000"));
+		}
+		else if (selected.getSelectedMovie().getVoteAverage() < 7.5) {
+			movieRating.setTextFill(Color.web("#ffff00"));
+		}
+		else {
+			movieRating.setTextFill(Color.web("#43f707"));
+		}
+		movieRating.setText("" + selected.getSelectedMovie().getVoteAverage());
 	}
 
 	/**
