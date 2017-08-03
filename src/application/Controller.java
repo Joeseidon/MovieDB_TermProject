@@ -36,9 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import info.movito.themoviedbapi.TmdbMovies;
-import info.movito.themoviedbapi.TmdbReviews;
-import info.movito.themoviedbapi.TmdbReviews.ReviewResultsPage;
+
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
@@ -339,9 +337,20 @@ public class Controller implements Initializable {
 	/**
 	 * Collections.
 	 */
-	enum collections{
+	enum Collections {
+		/**
+		 * Top rated movies.
+		 */
 		topRated,
+		
+		/**
+		 * Movies playing now.
+		 */
 		nowPlaying,
+		
+		/**
+		 * Upcoming movies.
+		 */
 		upcoming
 	};
 	/**
@@ -396,7 +405,8 @@ public class Controller implements Initializable {
 			selected = new MovieSelection(user);
 			searchEngine = new SearchModule(user.getTmdbApi());
 			randMovieGen = new TmdbRandomizer(user);
-			movieCollection = new MovieCollections(user.getTmdbApi());
+			movieCollection = 
+					new MovieCollections(user.getTmdbApi());
 
 			webview = new WebView();
 
@@ -404,28 +414,57 @@ public class Controller implements Initializable {
 			
 			generateFilterList();
 
-			DisplayCollection(collections.nowPlaying, defaultPage);
-			DisplayCollection(collections.topRated, defaultPage);
-			DisplayCollection(collections.upcoming, defaultPage);
+			displayCollection(Collections.nowPlaying, defaultPage);
+			displayCollection(Collections.topRated, defaultPage);
+			displayCollection(Collections.upcoming, defaultPage);
 		}
 		//i += 1;
 	}
 	
 	
-	public void DisplayCollection (collections current, int page) {
-		if (current == collections.nowPlaying) {
-		nowPlayingListDic = generateDictionaryandDisplay(movieCollection.getNowPlaying(page), inTheatersNowList);
-		} else if (current == collections.topRated) {
-		topRatedListDic = generateDictionaryandDisplay(movieCollection.getTopRated(page), topRatedList);
-		} else if (current == collections.upcoming) {
-		upcomingListDic = generateDictionaryandDisplay(movieCollection.getUpcoming(page), upcomingList);
+	/**
+	 * Displays desired collection of movies.
+	 * 
+	 * @param current Current collection to display
+	 * @param page Page number to display
+	 */
+	public void displayCollection(
+			final Collections current, final int page) {
+		if (current == Collections.nowPlaying) {
+			nowPlayingListDic = 
+					generateDictionaryandDisplay(
+							movieCollection
+							.getNowPlaying(page), 
+							inTheatersNowList);
+		} else if (current == Collections.topRated) {
+			topRatedListDic = 
+					generateDictionaryandDisplay(
+							movieCollection
+							.getTopRated(page),
+							topRatedList);
+		} else if (current == Collections.upcoming) {
+			upcomingListDic = 
+					generateDictionaryandDisplay(
+							movieCollection
+							.getUpcoming(page), 
+							upcomingList);
 		}
 	}
 	
-	private Hashtable<String, MovieDb> generateDictionaryandDisplay(MovieResultsPage results, ListView<String> frame){
+	/**
+	 * 
+	 * 
+	 * @param results Movies to be added
+	 * @param frame Frame to fill
+	 * @return Returns Hashtable of movies
+	 */
+	private Hashtable<String, MovieDb> generateDictionaryandDisplay(
+			final MovieResultsPage results,
+			final ListView<String> frame) {
 		ObservableList<String> data = FXCollections.
 				observableArrayList();
-		Hashtable<String, MovieDb> tmp = new Hashtable<String, MovieDb>();
+		Hashtable<String, MovieDb> tmp = 
+				new Hashtable<String, MovieDb>();
 		
 		Iterator<MovieDb> itr = results.iterator();
 		while (itr.hasNext()) {
@@ -562,20 +601,20 @@ public class Controller implements Initializable {
 		
 		descriptionField.clear();
 		descriptionField.appendText("Movie Title: " 
-				+ selected.getSelectedMovie().getTitle() + "\n");
+				+ selected.getSelectedMovie().getTitle() 
+				+ "\n");
 		descriptionField.appendText("Movie Description: " 
 				+ selected.getSelectedMovie().getOverview());
 		
 		if (selected.getSelectedMovie().getVoteAverage() < 5.5) {
 			movieRating.setTextFill(Color.web("#ff0000"));
-		}
-		else if (selected.getSelectedMovie().getVoteAverage() < 7.5) {
+		} else if (selected.getSelectedMovie().getVoteAverage() < 7.5) {
 			movieRating.setTextFill(Color.web("#ffff00"));
-		}
-		else {
+		} else {
 			movieRating.setTextFill(Color.web("#43f707"));
 		}
-		movieRating.setText("" + selected.getSelectedMovie().getVoteAverage());
+		movieRating.setText("" 
+				+ selected.getSelectedMovie().getVoteAverage());
 	}
 
 	/**
@@ -829,7 +868,7 @@ public class Controller implements Initializable {
 		} catch (DataBaseConnectionException e) {
 			// Do nothing here
 		}
-		if(temp != null){
+		if (temp != null) {
 			Controller.i = 1;
 			try {
 				Parent parent = FXMLLoader.load(getClass()
@@ -843,18 +882,20 @@ public class Controller implements Initializable {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	
-		}
-		else {
-			if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == true){
-				errorLabel.setText("No username and no password.");
-			}
-			else if(usernameField1.getText().isEmpty() == true && passwordField.getText().isEmpty() == false){
+		} else {
+			if (usernameField1.getText().isEmpty() 
+					&& passwordField.getText().isEmpty()) {
+				errorLabel.setText(
+						"No username and no password.");
+			} else if (usernameField1.getText().isEmpty()
+					&& !(passwordField.getText()
+							.isEmpty())) {
 				errorLabel.setText("No username.");
-			}
-			else if(usernameField1.getText().isEmpty() == false && passwordField.getText().isEmpty() == true){
+			} else if (!(usernameField1.getText().isEmpty())
+					&& !(passwordField.getText()
+							.isEmpty())) {
 				errorLabel.setText("No password.");
-			}
-			else{
+			} else {
 				errorLabel.setText("Invalid login.");
 			}
 		}
@@ -902,7 +943,7 @@ public class Controller implements Initializable {
 	/**
 	 * 
 	 */
-	private void generateFilterList(){
+	private void generateFilterList() {
 		filterList.getItems().addAll("Year", "Genre", "Actor");
 	}
 	
@@ -911,16 +952,24 @@ public class Controller implements Initializable {
 	 * 
 	 * @param event Button press
 	 */
-	public void addFilter(final ActionEvent event){
-		if(!filterField.getText().isEmpty() && filterList.getValue() != null){
-			CheckMenuItem filter = new CheckMenuItem(filterList.getValue() + ": " + filterField.getText());
+	public void addFilter(final ActionEvent event) {
+		if (!filterField.getText().isEmpty()
+				&& filterList.getValue() != null) {
+			CheckMenuItem filter = 
+					new CheckMenuItem(
+							filterList.getValue()
+							+ ": "
+							+ filterField
+								.getText());
 			activeFilters.getItems().add(filter);
-		}
-		else if(filterList.getValue() == null){
-			JOptionPane.showMessageDialog(null, "Please select a filter type from the list.");
-		}
-		else{
-			JOptionPane.showMessageDialog(null, "Please enter somthing for the filter.");
+		} else if (filterList.getValue() == null) {
+			JOptionPane.showMessageDialog(
+					null, "Please select a filter type "
+							+ "from the list.");
+		} else {
+			JOptionPane.showMessageDialog(
+					null, "Please enter somthing "
+							+ "for the filter.");
 		}
 	}
 	
@@ -929,17 +978,19 @@ public class Controller implements Initializable {
 	 * 
 	 * @param event Button press
 	 */
-	public void removeFilter(final ActionEvent event){
+	public void removeFilter(final ActionEvent event) {
 		ObservableList<MenuItem> tempList = activeFilters.getItems();
-		ObservableList<CheckMenuItem> addList = FXCollections.observableArrayList();
-		for(int j=0; j<tempList.size(); j++){
-			CheckMenuItem tempItem = (CheckMenuItem) tempList.get(j);
-			if(!tempItem.isSelected()){
+		ObservableList<CheckMenuItem> addList = 
+				FXCollections.observableArrayList();
+		for (int j = 0; j < tempList.size(); j++) {
+			CheckMenuItem tempItem = 
+					(CheckMenuItem) tempList.get(j);
+			if (!tempItem.isSelected()) {
 				addList.add(tempItem);
 			}
 		}
 		activeFilters.getItems().clear();
-		while(!addList.isEmpty()){
+		while (!addList.isEmpty()) {
 			activeFilters.getItems().addAll(addList.get(0));
 			addList.remove(0);
 		}
@@ -950,20 +1001,26 @@ public class Controller implements Initializable {
 	 * 
 	 * @param event Button press
 	 */
-	public void searchPageUp(ActionEvent event){
-		if(!searchList.getItems().isEmpty()){
+	public void searchPageUp(final ActionEvent event) {
+		if (!searchList.getItems().isEmpty()) {
 			Controller.currentPage += 1;
-			if(titleCheck.isSelected()){
-				searchResultsToDisplay(searchEngine.searchByMovieTitle(
-						searchField.getText(), false, currentPage));
+			if (titleCheck.isSelected()) {
+				searchResultsToDisplay(
+						searchEngine.searchByMovieTitle(
+								searchField
+								.getText(), 
+								false, 
+								currentPage));
+			} else {
+				searchResultsToDisplay(
+						searchEngine.searchByKeyword(
+								searchField
+								.getText(), 
+								currentPage));
 			}
-			else {
-				searchResultsToDisplay(searchEngine.searchByKeyword(
-						searchField.getText(), currentPage));
-			}
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "No search has been done.");
+		} else {
+			JOptionPane.showMessageDialog(
+					null, "No search has been done.");
 		}
 	}
 	
@@ -972,23 +1029,30 @@ public class Controller implements Initializable {
 	 * 
 	 * @param event Button press
 	 */
-	public void searchPageDown(ActionEvent event){
-		if(!searchList.getItems().isEmpty()){
+	public void searchPageDown(final ActionEvent event) {
+		if (!searchList.getItems().isEmpty()) {
 			currentPage -= 1;
-			if(currentPage < defaultPage){
+			if (currentPage < defaultPage) {
 				currentPage = defaultPage;
 			}
-			if(titleCheck.isSelected()){
-				searchResultsToDisplay(searchEngine.searchByMovieTitle(
-						searchField.getText(), false, currentPage));
+			
+			if (titleCheck.isSelected()) {
+				searchResultsToDisplay(
+						searchEngine.searchByMovieTitle(
+								searchField
+								.getText(), 
+								false, 
+								currentPage));
+			} else {
+				searchResultsToDisplay(
+						searchEngine.searchByKeyword(
+								searchField
+								.getText(), 
+								currentPage));
 			}
-			else {
-				searchResultsToDisplay(searchEngine.searchByKeyword(
-						searchField.getText(), currentPage));
-			}
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "No search has been done.");
+		} else {
+			JOptionPane.showMessageDialog(
+					null, "No search has been done.");
 		}
 	}	
 }

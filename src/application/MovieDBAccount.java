@@ -52,11 +52,15 @@ public class MovieDBAccount {
 	 * Public constructor which creates a TmdbApi, session token,
 	 * account, and account ID for use throughout this program.
 	 * 
-	 * @param None
+	 * @param username User name for account
+	 * @param password Password for account
 	 * @exception DataBaseConnectionException
 	 * 	             	Exception for when database can't connect
 	 */
-	public MovieDBAccount(String username, String password) throws DataBaseConnectionException {
+	public MovieDBAccount(
+			final String username, 
+			final String password) 
+					throws DataBaseConnectionException {
 		try {
 			tmdbApi = new TmdbApi(
 					"3c55a927fbd8c6990313cb6d5de43d62");
@@ -80,7 +84,7 @@ public class MovieDBAccount {
 	 * @return userName Name of the current user
 	 */
 	public String getUserName() {
-		if(act.getName().isEmpty() == true){
+		if (act.getName().isEmpty()) {
 			return act.getUserName();
 		}
 		return act.getName();
@@ -162,11 +166,14 @@ public class MovieDBAccount {
 	 * Provides the caller with a sessionToken
 	 * generated for the current user.
 	 * 
-	 * @param None
+	 * @param username User name for session
+	 * @param password Password for session
 	 * @return SessionToken Session token for the current users
 	 *                      session with the movie manager
 	 */
-	private SessionToken getSessionToken(String username, String password) {
+	private SessionToken getSessionToken(
+			final String username, 
+			final String password) {
 		TmdbAuthentication tmdbAuth = tmdbApi.getAuthentication();
 		TokenSession tokenSession = tmdbAuth.getSessionLogin(
 				username, password);
