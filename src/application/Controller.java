@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -36,12 +37,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
+import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.Multi.MediaType;
 //import info.movito.themoviedbapi.model.Reviews;
+import info.movito.themoviedbapi.model.people.PersonCast;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
@@ -738,6 +742,8 @@ public class Controller implements Initializable {
 		boolean genrePass;
 		boolean actorPass;
 		
+		TmdbMovies movieT = new TmdbMovies(user.getTmdbApi());
+		
 		if (activeFilters.getItems().isEmpty()) {
 			return true;
 		} else {
@@ -761,36 +767,40 @@ public class Controller implements Initializable {
 					genrePass = false;
 					String genreText = text.substring(7).toLowerCase();
 					
-					System.out.println(genreText);
-					if (movie.getGenres() != null) {
-						System.out.println("here");
-						System.out.println(movie.getGenres().get(0).getName());
-					} else {
-						System.out.println("none");
-					}
-					
-					/*for (int j = 0; j < movie.getGenres().size(); ++j) {
-						if (movie.getGenres().get(j).toString()
-								.toLowerCase().contains(genreText)) {
+					ArrayList<Genre> listG = (ArrayList<Genre>) movieT.getMovie(
+							movie.getId(), "english",
+							TmdbMovies.MovieMethod
+							.valueOf("lists")).getGenres();
+					Iterator<Genre> iteratorG = listG.iterator();
+										
+					while (iteratorG.hasNext()) {
+						Genre g = iteratorG.next();
+						
+						if (g.toString().toLowerCase().contains(genreText)) {
 							genrePass = true;
 						}
-					}*/
+					}
 					
 					if (!genrePass) {
 						return false;
 					}
-					
-					return false;
 				} else if (text.contains("Actor")) {
 					actorPass = false;
 					String actorText = text.substring(7).toLowerCase();
 					
-					if (movie.getCast() == null) {
-						System.out.println("No cast\n");
-					} else {
-						for (int j = 0; j < movie.getCast().size(); ++j) {
-							if (movie.getCast().get(j).getName()
-									.toLowerCase().contains(actorText)) {
+					ArrayList<PersonCast> listC = 
+							(ArrayList<PersonCast>) movieT.getMovie(
+									movie.getId(), "english", 
+									TmdbMovies.MovieMethod.valueOf(
+											"lists")).getCast();
+					if (listC != null) {
+						Iterator<PersonCast> iteratorC = listC.iterator();
+											
+						while (iteratorC.hasNext()) {
+							PersonCast p = iteratorC.next();
+							
+							if (p.toString().toLowerCase().contains(
+									actorText)) {
 								actorPass = true;
 							}
 						}
