@@ -36,7 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
+import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
@@ -684,8 +684,10 @@ public class Controller implements Initializable {
 		while (iteratorW.hasNext()) {
 			results = true;
 			MovieDb movie = iteratorW.next();
-			searchData.add(movie.toString());
-			searchListDic.put(movie.toString(), movie);
+			if (meetsFilters(movie)) {
+				searchData.add(movie.toString());
+				searchListDic.put(movie.toString(), movie);
+			}
 		}
 		
 		if (!results) {
@@ -713,13 +715,95 @@ public class Controller implements Initializable {
 			Multi m = iteratorW.next();
 			
 			if (m.getMediaType() == MediaType.MOVIE) {
-				searchData.add(((MovieDb) m).toString());
-				searchListDic.put(((MovieDb) m).toString(), 
-					(MovieDb) m);
+				MovieDb movie = (MovieDb) m;
+				
+				if (meetsFilters(movie)) {
+					searchData.add(movie.toString());
+					searchListDic.put(movie.toString(), 
+							movie);
+				}
 			}
 		}
 
 		searchList.setItems(searchData);
+	}
+	
+	/**
+	 * Returns true if movie passes all applied filters.
+	 * 
+	 * @param movie Movie to be tested
+	 * @return Boolean value
+	 */
+	private boolean meetsFilters(final MovieDb movie) {
+		boolean genrePass;
+		boolean actorPass;
+		
+		if (activeFilters.getItems().isEmpty()) {
+			return true;
+		} else {
+			String text;
+			
+			for (int i = 0; i < activeFilters.getItems().size(); ++i) {
+				
+				text = activeFilters.getItems().get(i).getText();
+				
+				if (text.contains("Year")) {
+					String yearText = text.substring(6);
+					
+					if (movie.getReleaseDate() == null) {
+						return false;
+					}
+					
+					if (!movie.getReleaseDate().contains(yearText)) {
+						return false;
+					}
+				} else if (text.contains("Genre")) {
+					genrePass = false;
+					String genreText = text.substring(7).toLowerCase();
+					
+					System.out.println(genreText);
+					if (movie.getGenres() != null) {
+						System.out.println("here");
+						System.out.println(movie.getGenres().get(0).getName());
+					} else {
+						System.out.println("none");
+					}
+					
+					/*for (int j = 0; j < movie.getGenres().size(); ++j) {
+						if (movie.getGenres().get(j).toString()
+								.toLowerCase().contains(genreText)) {
+							genrePass = true;
+						}
+					}*/
+					
+					if (!genrePass) {
+						return false;
+					}
+					
+					return false;
+				} else if (text.contains("Actor")) {
+					actorPass = false;
+					String actorText = text.substring(7).toLowerCase();
+					
+					if (movie.getCast() == null) {
+						System.out.println("No cast\n");
+					} else {
+						for (int j = 0; j < movie.getCast().size(); ++j) {
+							if (movie.getCast().get(j).getName()
+									.toLowerCase().contains(actorText)) {
+								actorPass = true;
+							}
+						}
+					}
+					
+					if (!actorPass) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	/**
