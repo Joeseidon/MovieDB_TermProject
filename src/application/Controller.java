@@ -953,14 +953,32 @@ public class Controller implements Initializable {
 	}
 	
 	/**
+	 * Function to set user-name.
+	 * 
+	 * @param username User's user-name
+	 */
+	private void setUsername(final String username) {
+		Controller.username = username;
+	}
+	
+	/**
+	 * Function to set password.
+	 * 
+	 * @param password User's password
+	 */
+	private void setPassword(final String password) {
+		Controller.password = password;
+	}
+	
+	/**
 	 * Function for logging in to user's API account.
 	 * 
 	 * @param event Button press
 	 */
 	//@SuppressWarnings("unused")
 	public void checkLogin(final ActionEvent event) {
-		username = usernameField1.getText();
-		password = passwordField.getText();
+		setUsername(usernameField1.getText());
+		setPassword(passwordField.getText());
 		MovieDBAccount temp = null;
 		
 		try {
@@ -1041,7 +1059,9 @@ public class Controller implements Initializable {
 	}
 	
 	/**
+	 * Function to create the list of possible filters.
 	 * 
+	 * @param None
 	 */
 	private void generateFilterList() {
 		filterList.getItems().addAll("Year", "Genre", "Actor");
@@ -1156,7 +1176,12 @@ public class Controller implements Initializable {
 		}
 	}	
 	
-	public void getReviews(ActionEvent event){
+	/**
+	 * Function for viewing reviews of selected movie.
+	 * 
+	 * @param event Button press
+	 */
+	public void getReviews(final ActionEvent event) {
 		TextArea reviewField = new TextArea();
 		
 		Stage stage = new Stage();
@@ -1176,8 +1201,8 @@ public class Controller implements Initializable {
 		stage.show();
 		
 		reviewField.setWrapText(true);
-		reviewField.setStyle("-fx-background-color:  #c3c4c4,        "
-				+ "linear-gradient(#d6d6d6 50%, white 100%),        "
+		reviewField.setStyle("-fx-background-color:  #c3c4c4, "
+				+ "linear-gradient(#d6d6d6 50%, white 100%), "
 				+ "radial-gradient(center 50% -40%, radius 200%, "
 				+ "#e6e6e6 45%, rgba(230,230,230,0) 50%)");
 		
@@ -1187,19 +1212,11 @@ public class Controller implements Initializable {
 				TmdbMovies.MovieMethod.valueOf("reviews")).getReviews();
 		Iterator<Reviews> iteratorR = list.iterator();
 		
-		while(iteratorR.hasNext()){
+		while (iteratorR.hasNext()) {
 			Reviews review = iteratorR.next();
 			reviewField.appendText(review.getAuthor() + "\n");
 			reviewField.appendText(review.getContent() + "\n");
 			reviewField.appendText("\n");
 		}
-
-//		stage.setOnCloseRequest(new 
-//				EventHandler<WindowEvent>() {
-//			@Override
-//			public void handle(final WindowEvent event) {
-//				reviewField.clear();
-//			}
-//		});
 	}
 }
