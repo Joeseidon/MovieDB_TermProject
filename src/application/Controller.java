@@ -44,7 +44,7 @@ import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.MovieDb;
 import info.movito.themoviedbapi.model.Multi;
 import info.movito.themoviedbapi.model.Multi.MediaType;
-//import info.movito.themoviedbapi.model.Reviews;
+import info.movito.themoviedbapi.model.Reviews;
 import info.movito.themoviedbapi.model.people.PersonCast;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
@@ -255,6 +255,12 @@ public class Controller implements Initializable {
 	 */
 	@FXML
 	private Button searchPageDownButton;
+	
+	/**
+	 * Button to get reviews for the selected movie.
+	 */
+	@FXML
+	private Button reviewsButton;
 	
 	/**
 	 * Label for movie rating.
@@ -1149,4 +1155,51 @@ public class Controller implements Initializable {
 					null, "No search has been done.");
 		}
 	}	
+	
+	public void getReviews(ActionEvent event){
+		TextArea reviewField = new TextArea();
+		
+		Stage stage = new Stage();
+
+		AnchorPane root = new AnchorPane();
+		AnchorPane.setBottomAnchor(reviewField, 0.0);
+		AnchorPane.setTopAnchor(reviewField, 0.0);
+		AnchorPane.setLeftAnchor(reviewField, 0.0);
+		AnchorPane.setRightAnchor(reviewField, 0.0);
+
+		root.getChildren().add(reviewField);
+
+		stage.setTitle("Reviews");
+		Scene account = new Scene(root, 1000, 600);
+		stage.setScene(account);
+		stage.centerOnScreen();
+		stage.show();
+		
+		reviewField.setWrapText(true);
+		reviewField.setStyle("-fx-background-color:  #c3c4c4,        "
+				+ "linear-gradient(#d6d6d6 50%, white 100%),        "
+				+ "radial-gradient(center 50% -40%, radius 200%, "
+				+ "#e6e6e6 45%, rgba(230,230,230,0) 50%)");
+		
+		TmdbMovies temp = new TmdbMovies(user.getTmdbApi());
+		ArrayList<Reviews> list = (ArrayList<Reviews>) temp.getMovie(
+				selected.getSelectedMovie().getId(), "english", 
+				TmdbMovies.MovieMethod.valueOf("reviews")).getReviews();
+		Iterator<Reviews> iteratorR = list.iterator();
+		
+		while(iteratorR.hasNext()){
+			Reviews review = iteratorR.next();
+			reviewField.appendText(review.getAuthor() + "\n");
+			reviewField.appendText(review.getContent() + "\n");
+			reviewField.appendText("\n");
+		}
+
+//		stage.setOnCloseRequest(new 
+//				EventHandler<WindowEvent>() {
+//			@Override
+//			public void handle(final WindowEvent event) {
+//				reviewField.clear();
+//			}
+//		});
+	}
 }
