@@ -745,7 +745,6 @@ public class Controller implements Initializable {
 	 * @return Boolean value
 	 */
 	private boolean meetsFilters(final MovieDb movie) {
-		boolean genrePass;
 		boolean actorPass;
 		
 		TmdbMovies movieT = new TmdbMovies(user.getTmdbApi());
@@ -770,7 +769,7 @@ public class Controller implements Initializable {
 						return false;
 					}
 				} else if (text.contains("Genre")) {
-					genrePass = false;
+					boolean genrePass = false;
 					String genreText = text.substring(7).toLowerCase();
 					
 					ArrayList<Genre> listG = (ArrayList<Genre>) movieT.getMovie(
@@ -797,18 +796,14 @@ public class Controller implements Initializable {
 					ArrayList<PersonCast> listC = 
 							(ArrayList<PersonCast>) movieT.getMovie(
 									movie.getId(), "english", 
-									TmdbMovies.MovieMethod.valueOf(
-											"lists")).getCast();
-					if (listC != null) {
-						Iterator<PersonCast> iteratorC = listC.iterator();
+									TmdbMovies.MovieMethod.values()).getCast();
+					Iterator<PersonCast> iteratorC = listC.iterator();
 											
-						while (iteratorC.hasNext()) {
-							PersonCast p = iteratorC.next();
-							
-							if (p.toString().toLowerCase().contains(
-									actorText)) {
-								actorPass = true;
-							}
+					while (iteratorC.hasNext()) {
+						PersonCast p = iteratorC.next();
+						
+						if (p.toString().toLowerCase().contains(actorText)) {
+							actorPass = true;
 						}
 					}
 					
