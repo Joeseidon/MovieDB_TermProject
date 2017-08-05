@@ -1213,5 +1213,7 @@ public class Controller implements Initializable {
 			reviewField.appendText(review.getContent() + "\n");
 			reviewField.appendText("\n");
 		}
+		
+		reviewField.setEditable(false);
 	}
 }
