@@ -37,8 +37,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
+import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
+import info.movito.themoviedbapi.TmdbPeople.PersonResultsPage;
+import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
 import info.movito.themoviedbapi.model.Genre;
 import info.movito.themoviedbapi.model.MovieDb;
@@ -1068,23 +1070,69 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void addFilter(final ActionEvent event) {
-		if (!filterField.getText().isEmpty()
-				&& filterList.getValue() != null) {
-			CheckMenuItem filter = 
-					new CheckMenuItem(
-							filterList.getValue()
-							+ ": "
-							+ filterField
-								.getText());
-			activeFilters.getItems().add(filter);
+		boolean yearValid = false;
+		boolean genreValid = false;
+		boolean actorValid = false;
+		
+		if (!filterField.getText().isEmpty() && filterList.getValue() != null) {
+			if (filterList.getValue().equals("Year")) {
+				int year;
+				
+				try {
+					year = Integer.parseInt(filterField.getText());
+					
+					if (year > 1000 && year < 3000) {
+						yearValid = true;
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Please enter a valid year.");
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,
+							"Please enter a number.");
+				}
+				
+			} else if (filterList.getValue().equals("Genre")) {
+				TmdbApi a = new TmdbApi(user.getTmdbApi().getApiKey());
+				ArrayList<Genre> list =
+						(ArrayList<Genre>) a.getGenre().getGenreList("english");
+				
+				for (int i = 0; i < list.size(); ++i) {
+					if (list.get(i).getName().toLowerCase().equals(
+							filterField.getText().toLowerCase())) {
+						genreValid = true;
+					}
+				}
+				
+				if (!genreValid) {
+					JOptionPane.showMessageDialog(null,
+							"Please enter a valid genre.");
+				}
+			} else if (filterList.getValue().equals("Actor")) {
+				TmdbSearch temp = new TmdbSearch(user.getTmdbApi());
+				PersonResultsPage page = 
+						temp.searchPerson(filterField.getText(), false, 1);
+				
+				if (page.getResults().isEmpty()) {
+					JOptionPane.showMessageDialog(null,
+							"Please enter a valid actor name.");
+				} else {
+					actorValid = true;
+				}
+			}
+			
+			if (yearValid || genreValid || actorValid) {
+				CheckMenuItem filter = new CheckMenuItem(filterList.getValue()
+						+ ": " + filterField.getText());
+				
+				activeFilters.getItems().add(filter);
+			}
 		} else if (filterList.getValue() == null) {
-			JOptionPane.showMessageDialog(
-					null, "Please select a filter type "
-							+ "from the list.");
+			JOptionPane.showMessageDialog(null,
+					"Please select a filter type from the list.");
 		} else {
-			JOptionPane.showMessageDialog(
-					null, "Please enter somthing "
-							+ "for the filter.");
+			JOptionPane.showMessageDialog(null,
+					"Please enter somthing for the filter.");
 		}
 	}
 	
