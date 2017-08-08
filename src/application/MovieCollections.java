@@ -23,6 +23,7 @@ public class MovieCollections {
 	 * @param api API connection created for current account. 
 	 */
 	public MovieCollections(final TmdbApi api) {
+		
 		movies = new TmdbMovies(api);
 	}
 	
@@ -33,6 +34,7 @@ public class MovieCollections {
 	 * @return TopRatedMovies The current top rated movies.
 	 */
 	public MovieResultsPage getTopRated(final int page) {
+		
 		return movies.getTopRatedMovies("english", page);
 	}
 	
@@ -43,6 +45,7 @@ public class MovieCollections {
 	 * @return Upcoming Movies that will be out shortly.
 	 */
 	public MovieResultsPage getUpcoming(final int page) {
+		
 		return movies.getUpcoming("english", page);
 	}
 	
@@ -53,6 +56,7 @@ public class MovieCollections {
 	 * @return BeingPlayed Movies being played in theaters.
 	 */
 	public MovieResultsPage getNowPlaying(final int page) {
+		
 		return movies.getNowPlayingMovies("english", page);
 	}
 }

@@ -17,10 +17,11 @@ public class App extends Application {
 
 	@Override
 	public void start(final Stage primaryStage) {
+		
 		try {
 			// Read file FXML and draw interface.
-			Parent root = FXMLLoader.load(getClass().
-				getResource("/application/login.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource(
+					"/application/login.fxml"));
 			
 			primaryStage.setTitle("Movie Gen 7000");
 			primaryStage.setScene(new Scene(root));
@@ -38,6 +39,7 @@ public class App extends Application {
 	 * @param args Command line arguments
 	 */
 	public static void main(final String[] args) {
+		
 		launch(args);
 	}
 }

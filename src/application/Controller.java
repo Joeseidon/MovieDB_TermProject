@@ -16,9 +16,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CheckMenuItem;
@@ -33,22 +30,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import info.movito.themoviedbapi.model.core.MovieResultsPage;
+import info.movito.themoviedbapi.model.Genre;
+import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Multi;
+import info.movito.themoviedbapi.model.Multi.MediaType;
+import info.movito.themoviedbapi.model.people.PersonCast;
+import info.movito.themoviedbapi.model.Reviews;
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbPeople.PersonResultsPage;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.TmdbSearch.MultiListResultsPage;
-import info.movito.themoviedbapi.model.Genre;
-import info.movito.themoviedbapi.model.MovieDb;
-import info.movito.themoviedbapi.model.Multi;
-import info.movito.themoviedbapi.model.Multi.MediaType;
-import info.movito.themoviedbapi.model.Reviews;
-import info.movito.themoviedbapi.model.people.PersonCast;
-import info.movito.themoviedbapi.model.core.MovieResultsPage;
 
 /**
  * This class is the action controller for the FXML file.
@@ -365,8 +366,9 @@ public class Controller implements Initializable {
 		 */
 		upcoming
 	};
+	
 	/**
-	 * Url for new API account.
+	 * URL for new API account.
 	 */
 	private final String newAccountPage = "https://www.themoviedb.org/"
 			+ "account/signup?language=en";
@@ -394,19 +396,21 @@ public class Controller implements Initializable {
 	 * @param resources Resources of FXML file
 	 */
 	@Override
-	public void initialize(final URL location, 
-			final ResourceBundle resources) {
+	public void initialize(final URL location, final ResourceBundle resources) {
+		
 		webview = new WebView();
+		
 		if (i == 1) {
+			
 			try {
+				
 				user = new MovieDBAccount(username, password);
+				
 			} catch (DataBaseConnectionException e) {
 				// Connection Error
-				JOptionPane.showMessageDialog(null,
-					"Connection Error: " 
-					+ e.getMessage() + "\nCheck "
-					+ "internet connection "
-					+ "and restart program.");
+				JOptionPane.showMessageDialog(null, "Connection Error: " 
+					+ e.getMessage() 
+					+ "\nCheck internet connection and restart program.");
 			
 				// Close down the program
 				Platform.exit();
@@ -417,9 +421,7 @@ public class Controller implements Initializable {
 			selected = new MovieSelection(user);
 			searchEngine = new SearchModule(user.getTmdbApi());
 			randMovieGen = new TmdbRandomizer(user);
-			movieCollection = 
-					new MovieCollections(user.getTmdbApi());
-
+			movieCollection = new MovieCollections(user.getTmdbApi());
 			webview = new WebView();
 
 			generateFavandWatchlist();
@@ -430,7 +432,6 @@ public class Controller implements Initializable {
 			displayCollection(Collections.topRated, defaultPage);
 			displayCollection(Collections.upcoming, defaultPage);
 		}
-		//i += 1;
 	}
 	
 	
@@ -440,51 +441,48 @@ public class Controller implements Initializable {
 	 * @param current Current collection to display
 	 * @param page Page number to display
 	 */
-	public void displayCollection(
-			final Collections current, final int page) {
+	public void displayCollection(final Collections current, final int page) {
+		
 		if (current == Collections.nowPlaying) {
-			nowPlayingListDic = 
-					generateDictionaryandDisplay(
-							movieCollection
-							.getNowPlaying(page), 
-							inTheatersNowList);
+			
+			nowPlayingListDic = generateDictionaryandDisplay(
+					movieCollection.getNowPlaying(page), inTheatersNowList);
+			
 		} else if (current == Collections.topRated) {
-			topRatedListDic = 
-					generateDictionaryandDisplay(
-							movieCollection
-							.getTopRated(page),
-							topRatedList);
+			
+			topRatedListDic = generateDictionaryandDisplay(
+					movieCollection.getTopRated(page), topRatedList);
+			
 		} else if (current == Collections.upcoming) {
-			upcomingListDic = 
-					generateDictionaryandDisplay(
-							movieCollection
-							.getUpcoming(page), 
-							upcomingList);
+			
+			upcomingListDic = generateDictionaryandDisplay(
+					movieCollection.getUpcoming(page), upcomingList);
+			
 		}
 	}
 	
 	/**
-	 * 
+	 * Create Hashtable of movies.
 	 * 
 	 * @param results Movies to be added
 	 * @param frame Frame to fill
 	 * @return Returns Hashtable of movies
 	 */
 	private Hashtable<String, MovieDb> generateDictionaryandDisplay(
-			final MovieResultsPage results,
-			final ListView<String> frame) {
-		ObservableList<String> data = FXCollections.
-				observableArrayList();
-		Hashtable<String, MovieDb> tmp = 
-				new Hashtable<String, MovieDb>();
+			final MovieResultsPage results, final ListView<String> frame) {
 		
+		ObservableList<String> data = FXCollections.observableArrayList();
+		Hashtable<String, MovieDb> tmp = new Hashtable<String, MovieDb>();
 		Iterator<MovieDb> itr = results.iterator();
+		
 		while (itr.hasNext()) {
 			MovieDb movie = itr.next();
 			data.add(movie.toString());
 			tmp.put(movie.toString(), movie);
 		}
+		
 		frame.setItems(data);
+		
 		return tmp;
 	}
 
@@ -495,13 +493,11 @@ public class Controller implements Initializable {
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromWatchList(final MouseEvent event) {
-		String selectedTitle = watchList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = watchList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					watchListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(watchListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
@@ -513,13 +509,12 @@ public class Controller implements Initializable {
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromFavoriteList(final MouseEvent event) {
-		String selectedTitle = favoriteList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = 
+				favoriteList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					favoriteListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(favoriteListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
@@ -531,13 +526,11 @@ public class Controller implements Initializable {
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromSearchList(final MouseEvent event) {
-		String selectedTitle = searchList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = searchList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					searchListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(searchListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
@@ -549,31 +542,29 @@ public class Controller implements Initializable {
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromTopRatedList(final MouseEvent event) {
-		String selectedTitle = topRatedList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = 
+				topRatedList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					topRatedListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(topRatedListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
 	
 	/**
-	 * Allows users to click on items in the in theaters now
-	 * list and displays them in the window.
+	 * Allows users to click on items in the in theaters
+	 * now list and displays them in the window.
 	 * 
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromInTheatersNowList(final MouseEvent event) {
-		String selectedTitle = inTheatersNowList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = 
+				inTheatersNowList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					nowPlayingListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(nowPlayingListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
@@ -585,13 +576,12 @@ public class Controller implements Initializable {
 	 * @param event Mouse click
 	 */
 	public void selectedMovieFromUpcomingList(final MouseEvent event) {
-		String selectedTitle = upcomingList.getSelectionModel()
-				.getSelectedItem();
+		
+		String selectedTitle = 
+				upcomingList.getSelectionModel().getSelectedItem();
 		
 		if (selectedTitle != null) {
-			selected.setSelectedMovie(
-					upcomingListDic.get(selectedTitle));
-			
+			selected.setSelectedMovie(upcomingListDic.get(selectedTitle));
 			displaySelectedMovie();
 		}
 	}
@@ -602,19 +592,23 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void displaySelectedMovie() {
+		
 		try {
+			
 			Image img = new Image(selected.getImageURL());
 			imageField.setImage(img);
+			
 		} catch (Exception ex) {
+			
 			Image img = new Image("http://npsapps.com/wp-content/"
 					+ "uploads/2015/09/slider1-bg.png");
 			imageField.setImage(img);
+			
 		}
 		
 		descriptionField.clear();
 		descriptionField.appendText("Movie Title: " 
-				+ selected.getSelectedMovie().getTitle() 
-				+ "\n");
+				+ selected.getSelectedMovie().getTitle() + "\n");
 		descriptionField.appendText("Movie Description: " 
 				+ selected.getSelectedMovie().getOverview());
 		
@@ -625,8 +619,8 @@ public class Controller implements Initializable {
 		} else {
 			movieRating.setTextFill(Color.web("#43f707"));
 		}
-		movieRating.setText("" 
-				+ selected.getSelectedMovie().getVoteAverage());
+		
+		movieRating.setText("" + selected.getSelectedMovie().getVoteAverage());
 	}
 
 	/**
@@ -646,16 +640,18 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void randomMovie(final ActionEvent event) {
+		
 		try {
+			
 			MovieDb rand = randMovieGen.getRandomMovie();
 			selected.setSelectedMovie(rand);
-			
 			displaySelectedMovie();
 
 		} catch (RandomNotFoundException e) {
+			
 			JOptionPane.showInternalMessageDialog(null, 
-				"Error in Connection please wait"
-				+ " and try to randomize again.");
+				"Error in Connection please wait and try to randomize again.");
+			
 		}
 
 	}
@@ -667,16 +663,22 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void searchMovie(final ActionEvent event) {
+		
 		if (titleCheck.isSelected() && !keywordCheck.isSelected()) {
+			
 			searchResultsToDisplay(searchEngine.searchByMovieTitle(
-				searchField.getText(), false, 1));
-		} else if (keywordCheck.isSelected() 
-				&& !titleCheck.isSelected()) {
+					searchField.getText(), false, 1));
+			
+		} else if (keywordCheck.isSelected() && !titleCheck.isSelected()) {
+			
 			searchResultsToDisplay(searchEngine.searchByKeyword(
-				searchField.getText(), 1));
+					searchField.getText(), 1));
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(null, 
 				"Please select either Title or Keyword");
+			
 		}
 	}
 
@@ -686,16 +688,15 @@ public class Controller implements Initializable {
 	 * @param mr Movie(s) found using title search
 	 */
 	private void searchResultsToDisplay(final MovieResultsPage mr) {
-		ObservableList<String> searchData = FXCollections
-				.observableArrayList();
-
-		Iterator<MovieDb> iteratorW = mr.iterator();
 		
+		ObservableList<String> searchData = FXCollections.observableArrayList();
+		Iterator<MovieDb> iteratorW = mr.iterator();
 		boolean results = false;
 		
 		while (iteratorW.hasNext()) {
 			results = true;
 			MovieDb movie = iteratorW.next();
+			
 			if (meetsFilters(movie)) {
 				searchData.add(movie.toString());
 				searchListDic.put(movie.toString(), movie);
@@ -703,8 +704,7 @@ public class Controller implements Initializable {
 		}
 		
 		if (!results) {
-			searchData.add(
-				"Sorry, your search returned no results.");
+			searchData.add("Sorry, your search returned no results.");
 		}
 		
 		searchList.setItems(searchData);
@@ -715,12 +715,9 @@ public class Controller implements Initializable {
 	 * 
 	 * @param tvandMv Movie(s) found by keyword search
 	 */
-	private void searchResultsToDisplay(
-			final MultiListResultsPage tvandMv) {
+	private void searchResultsToDisplay(final MultiListResultsPage tvandMv) {
 		
-		ObservableList<String> searchData = FXCollections.
-			observableArrayList();
-
+		ObservableList<String> searchData = FXCollections.observableArrayList();
 		Iterator<Multi> iteratorW = tvandMv.iterator();
 
 		while (iteratorW.hasNext()) {
@@ -729,10 +726,9 @@ public class Controller implements Initializable {
 			if (m.getMediaType() == MediaType.MOVIE) {
 				MovieDb movie = (MovieDb) m;
 				
-				if (meetsFilters(movie)) {
+				if ((meetsFilters(movie))) {
 					searchData.add(movie.toString());
-					searchListDic.put(movie.toString(), 
-							movie);
+					searchListDic.put(movie.toString(), movie);
 				}
 			}
 		}
@@ -747,13 +743,13 @@ public class Controller implements Initializable {
 	 * @return Boolean value
 	 */
 	private boolean meetsFilters(final MovieDb movie) {
-		boolean actorPass;
 		
 		TmdbMovies movieT = new TmdbMovies(user.getTmdbApi());
 		
 		if (activeFilters.getItems().isEmpty()) {
 			return true;
 		} else {
+			
 			String text;
 			
 			for (int i = 0; i < activeFilters.getItems().size(); ++i) {
@@ -761,6 +757,7 @@ public class Controller implements Initializable {
 				text = activeFilters.getItems().get(i).getText();
 				
 				if (text.contains("Year")) {
+					
 					String yearText = text.substring(6);
 					
 					if (movie.getReleaseDate() == null) {
@@ -770,15 +767,16 @@ public class Controller implements Initializable {
 					if (!movie.getReleaseDate().contains(yearText)) {
 						return false;
 					}
-				} else if (text.contains("Genre")) {
-					boolean genrePass = false;
-					String genreText = text.substring(7).toLowerCase();
 					
+				} else if (text.contains("Genre")) {
+					
+					String genreText = text.substring(7).toLowerCase();
 					ArrayList<Genre> listG = (ArrayList<Genre>) movieT.getMovie(
-							movie.getId(), "english",
-							TmdbMovies.MovieMethod
-							.valueOf("lists")).getGenres();
+							movie.getId(), "english", 
+							TmdbMovies.MovieMethod.valueOf("lists"))
+							.getGenres();
 					Iterator<Genre> iteratorG = listG.iterator();
+					boolean genrePass = false;
 										
 					while (iteratorG.hasNext()) {
 						Genre g = iteratorG.next();
@@ -791,15 +789,16 @@ public class Controller implements Initializable {
 					if (!genrePass) {
 						return false;
 					}
-				} else if (text.contains("Actor")) {
-					actorPass = false;
-					String actorText = text.substring(7).toLowerCase();
 					
+				} else if (text.contains("Actor")) {
+					
+					String actorText = text.substring(7).toLowerCase();
 					ArrayList<PersonCast> listC = 
 							(ArrayList<PersonCast>) movieT.getMovie(
 									movie.getId(), "english", 
 									TmdbMovies.MovieMethod.values()).getCast();
 					Iterator<PersonCast> iteratorC = listC.iterator();
+					boolean actorPass = false;
 											
 					while (iteratorC.hasNext()) {
 						PersonCast p = iteratorC.next();
@@ -812,6 +811,7 @@ public class Controller implements Initializable {
 					if (!actorPass) {
 						return false;
 					}
+					
 				}
 			}
 		}
@@ -826,13 +826,20 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void addMovie(final ActionEvent event) {
+		
 		if (favoriteCheckBox.isSelected()) {
+			
 			this.addMovieToFavorites();
+			
 		} else if (watchCheckBox.isSelected()) {
+			
 			this.addMovieToWatchlist();
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(null, 
 				"Please select either Favorites or Watchlist");
+			
 		}
 	}
 
@@ -843,13 +850,20 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void removeMovie(final ActionEvent event) {
+		
 		if (favoriteCheckBox.isSelected()) {
+			
 			this.removeItemFromFavorites();
+			
 		} else if (watchCheckBox.isSelected()) {
+			
 			this.removeItemFromWatchList();
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(null, 
 				"Please select either Favorites or Watchlist");
+			
 		}
 	}
 
@@ -859,6 +873,7 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void addMovieToWatchlist() {
+		
 		user.addMovieToWatchlist(selected.getSelectedMovie());
 		
 		watchListDic.put(selected.getSelectedMovie().getTitle(), 
@@ -873,6 +888,7 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void addMovieToFavorites() {
+		
 		user.addMovieToFavorites(selected.getSelectedMovie());
 		
 		favoriteListDic.put(selected.getSelectedMovie().getTitle(), 
@@ -887,6 +903,7 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void removeItemFromWatchList() {
+		
 		user.removeMovieFromWatchlist(selected.getSelectedMovie());
 		
 		watchListDic.remove(selected.getSelectedMovie().getTitle());
@@ -914,38 +931,11 @@ public class Controller implements Initializable {
 	 * @param None
 	 */
 	private void generateFavandWatchlist() {
-		/*ObservableList<String> watchdata = FXCollections.
-				observableArrayList();
 		
-		ObservableList<String> favoritedata = FXCollections.
-				observableArrayList();
-
-		MovieResultsPage watchlist = user.getWatchList();
-		Iterator<MovieDb> iteratorW = watchlist.iterator();
-		
-		while (iteratorW.hasNext()) {
-			MovieDb movie = iteratorW.next();
-			watchdata.add(movie.toString());
-			watchListDic.put(movie.toString(), movie);
-		}
-
-		watchList.setItems(watchdata);
-
-		MovieResultsPage favoritelist = user.getFavorites();
-		Iterator<MovieDb> iteratorF = favoritelist.iterator();
-		
-		while (iteratorF.hasNext()) {
-			MovieDb movie = iteratorF.next();
-			favoritedata.add(movie.toString());
-			favoriteListDic.put(movie.toString(), movie);
-		}
-
-		favoriteList.setItems(favoritedata);*/
-		
-		watchListDic = generateDictionaryandDisplay(
-				user.getWatchList(), watchList);
-		favoriteListDic = generateDictionaryandDisplay(
-				user.getFavorites(), favoriteList);
+		watchListDic = 
+				generateDictionaryandDisplay(user.getWatchList(), watchList);
+		favoriteListDic = 
+				generateDictionaryandDisplay(user.getFavorites(), favoriteList);
 		
 	}
 	
@@ -955,6 +945,7 @@ public class Controller implements Initializable {
 	 * @param username User's user-name
 	 */
 	private void setUsername(final String username) {
+		
 		Controller.username = username;
 	}
 	
@@ -964,6 +955,7 @@ public class Controller implements Initializable {
 	 * @param password User's password
 	 */
 	private void setPassword(final String password) {
+		
 		Controller.password = password;
 	}
 	
@@ -974,8 +966,10 @@ public class Controller implements Initializable {
 	 */
 	//@SuppressWarnings("unused")
 	public void checkLogin(final ActionEvent event) {
+		
 		setUsername(usernameField1.getText());
 		setPassword(passwordField.getText());
+		
 		MovieDBAccount temp = null;
 		
 		try {
@@ -983,11 +977,14 @@ public class Controller implements Initializable {
 		} catch (DataBaseConnectionException e) {
 			// Do nothing here
 		}
+		
 		if (temp != null) {
+			
 			Controller.i = 1;
+			
 			try {
-				Parent parent = FXMLLoader.load(getClass()
-						.getResource("MainScene.fxml"));
+				Parent parent = FXMLLoader.load(
+						getClass().getResource("MainScene.fxml"));
 				Scene scene = new Scene(parent);
 				Stage stage = (Stage) ((Node) event.getSource())
 						.getScene().getWindow();
@@ -997,22 +994,30 @@ public class Controller implements Initializable {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}	
+			
 		} else {
+			
 			if (usernameField1.getText().isEmpty() 
 					&& passwordField.getText().isEmpty()) {
-				errorLabel.setText(
-						"No username and no password.");
+				
+				errorLabel.setText("No username and no password.");
+				
 			} else if (usernameField1.getText().isEmpty()
-					&& !(passwordField.getText()
-							.isEmpty())) {
+					&& !(passwordField.getText().isEmpty())) {
+				
 				errorLabel.setText("No username.");
+				
 			} else if (!(usernameField1.getText().isEmpty())
-					&& !(passwordField.getText()
-							.isEmpty())) {
+					&& passwordField.getText().isEmpty()) {
+				
 				errorLabel.setText("No password.");
+				
 			} else {
+				
 				errorLabel.setText("Invalid login.");
+				
 			}
+			
 		}
 	}
 	
@@ -1023,7 +1028,9 @@ public class Controller implements Initializable {
 	 */
 	//@SuppressWarnings("unused")
 	public void newAPIAccount(final ActionEvent event) {
+		
 		try {
+			
 			webview.getEngine().load(newAccountPage);
 
 			Stage stage = new Stage();
@@ -1042,16 +1049,16 @@ public class Controller implements Initializable {
 			stage.centerOnScreen();
 			stage.show();
 
-			stage.setOnCloseRequest(new 
-					EventHandler<WindowEvent>() {
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
 				@Override
 				public void handle(final WindowEvent event) {
 					webview.getEngine().load(null);
 				}
 			});
+			
 		} catch (IndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(null, 
-					"Could not load page.");
+			JOptionPane.showMessageDialog(null, "Could not load page.");
 		}
 	}
 	
@@ -1075,7 +1082,9 @@ public class Controller implements Initializable {
 		boolean actorValid = false;
 		
 		if (!filterField.getText().isEmpty() && filterList.getValue() != null) {
+			
 			if (filterList.getValue().equals("Year")) {
+				
 				int year;
 				
 				try {
@@ -1093,6 +1102,7 @@ public class Controller implements Initializable {
 				}
 				
 			} else if (filterList.getValue().equals("Genre")) {
+				
 				TmdbApi a = new TmdbApi(user.getTmdbApi().getApiKey());
 				ArrayList<Genre> list =
 						(ArrayList<Genre>) a.getGenre().getGenreList("english");
@@ -1100,6 +1110,7 @@ public class Controller implements Initializable {
 				for (int i = 0; i < list.size(); ++i) {
 					if (list.get(i).getName().toLowerCase().equals(
 							filterField.getText().toLowerCase())) {
+						
 						genreValid = true;
 					}
 				}
@@ -1109,6 +1120,7 @@ public class Controller implements Initializable {
 							"Please enter a valid genre.");
 				}
 			} else if (filterList.getValue().equals("Actor")) {
+				
 				TmdbSearch temp = new TmdbSearch(user.getTmdbApi());
 				PersonResultsPage page = 
 						temp.searchPerson(filterField.getText(), false, 1);
@@ -1119,6 +1131,7 @@ public class Controller implements Initializable {
 				} else {
 					actorValid = true;
 				}
+				
 			}
 			
 			if (yearValid || genreValid || actorValid) {
@@ -1127,12 +1140,17 @@ public class Controller implements Initializable {
 				
 				activeFilters.getItems().add(filter);
 			}
+			
 		} else if (filterList.getValue() == null) {
+			
 			JOptionPane.showMessageDialog(null,
 					"Please select a filter type from the list.");
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(null,
 					"Please enter somthing for the filter.");
+			
 		}
 	}
 	
@@ -1142,17 +1160,22 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void removeFilter(final ActionEvent event) {
+		
 		ObservableList<MenuItem> tempList = activeFilters.getItems();
 		ObservableList<CheckMenuItem> addList = 
 				FXCollections.observableArrayList();
+		
 		for (int j = 0; j < tempList.size(); j++) {
-			CheckMenuItem tempItem = 
-					(CheckMenuItem) tempList.get(j);
+			
+			CheckMenuItem tempItem = (CheckMenuItem) tempList.get(j);
+			
 			if (!tempItem.isSelected()) {
 				addList.add(tempItem);
 			}
 		}
+		
 		activeFilters.getItems().clear();
+		
 		while (!addList.isEmpty()) {
 			activeFilters.getItems().addAll(addList.get(0));
 			addList.remove(0);
@@ -1165,25 +1188,26 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void searchPageUp(final ActionEvent event) {
+		
 		if (!searchList.getItems().isEmpty()) {
+			
 			Controller.currentPage += 1;
+			
 			if (titleCheck.isSelected()) {
 				searchResultsToDisplay(
 						searchEngine.searchByMovieTitle(
-								searchField
-								.getText(), 
-								false, 
-								currentPage));
+								searchField.getText(), false, currentPage));
 			} else {
 				searchResultsToDisplay(
 						searchEngine.searchByKeyword(
-								searchField
-								.getText(), 
-								currentPage));
+								searchField.getText(), currentPage));
 			}
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(
 					null, "No search has been done.");
+			
 		}
 	}
 	
@@ -1193,8 +1217,11 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void searchPageDown(final ActionEvent event) {
+		
 		if (!searchList.getItems().isEmpty()) {
+			
 			currentPage -= 1;
+			
 			if (currentPage < defaultPage) {
 				currentPage = defaultPage;
 			}
@@ -1202,20 +1229,18 @@ public class Controller implements Initializable {
 			if (titleCheck.isSelected()) {
 				searchResultsToDisplay(
 						searchEngine.searchByMovieTitle(
-								searchField
-								.getText(), 
-								false, 
-								currentPage));
+								searchField.getText(), false, currentPage));
 			} else {
 				searchResultsToDisplay(
 						searchEngine.searchByKeyword(
-								searchField
-								.getText(), 
-								currentPage));
+								searchField.getText(), currentPage));
 			}
+			
 		} else {
+			
 			JOptionPane.showMessageDialog(
 					null, "No search has been done.");
+			
 		}
 	}	
 	
@@ -1225,6 +1250,7 @@ public class Controller implements Initializable {
 	 * @param event Button press
 	 */
 	public void getReviews(final ActionEvent event) {
+		
 		TextArea reviewField = new TextArea();
 		
 		Stage stage = new Stage();

@@ -21,6 +21,7 @@ public class SearchModule extends TmdbSearch {
 	 * @param tmdbApi Used to connect to the movie database.
 	 */
 	public SearchModule(final TmdbApi tmdbApi) {
+		
 		super(tmdbApi);
 	}
 
@@ -33,8 +34,7 @@ public class SearchModule extends TmdbSearch {
 	 * @param page Which page of results to retrieve.
 	 * @return searchResults Results found based on the provided criteria.
 	 */
-	public MovieResultsPage searchByMovieTitle(
-			final String searchString,
+	public MovieResultsPage searchByMovieTitle(final String searchString,
 			final boolean adult, final int page) {
 		
 		return super.searchMovie(searchString, 0, "en", adult, page);

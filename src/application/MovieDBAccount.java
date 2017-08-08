@@ -57,23 +57,22 @@ public class MovieDBAccount {
 	 * @exception DataBaseConnectionException
 	 * 	             	Exception for when database can't connect
 	 */
-	public MovieDBAccount(
-			final String username, 
-			final String password) 
-					throws DataBaseConnectionException {
+	public MovieDBAccount(final String username, final String password) 
+			throws DataBaseConnectionException {
+		
 		try {
-			tmdbApi = new TmdbApi(
-					"3c55a927fbd8c6990313cb6d5de43d62");
 			
+			tmdbApi = new TmdbApi("3c55a927fbd8c6990313cb6d5de43d62");
 			sessionToken = getSessionToken(username, password);
-			
 			tmdbAccount = tmdbApi.getAccount();
 			act = tmdbAccount.getAccount(sessionToken);
 			actId = new AccountID(act.getId());
+			
 		} catch (Exception e) {
+			
 			throw new DataBaseConnectionException(
-					"Failed to connect to"
-					+ "the Movie Data Base");
+					"Failed to connect to the Movie Data Base");
+			
 		}
 	}
 
@@ -84,9 +83,11 @@ public class MovieDBAccount {
 	 * @return userName Name of the current user
 	 */
 	public String getUserName() {
+		
 		if (act.getName().isEmpty()) {
 			return act.getUserName();
 		}
+		
 		return act.getName();
 	}
 
@@ -97,9 +98,9 @@ public class MovieDBAccount {
 	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus addMovieToWatchlist(final MovieDb mToAdd) {
+		
 		return tmdbAccount.addToWatchList(
-				sessionToken, actId, mToAdd.getId(),
-				MediaType.MOVIE);
+				sessionToken, actId, mToAdd.getId(), MediaType.MOVIE);
 	}
 
 	/**
@@ -108,12 +109,10 @@ public class MovieDBAccount {
 	 * @param mToRemove The movie chosen to be removed.
 	 * @return responseStatus The status of the requested action.
 	 */
-	public ResponseStatus removeMovieFromWatchlist(
-			final MovieDb mToRemove) {
+	public ResponseStatus removeMovieFromWatchlist(final MovieDb mToRemove) {
 		
 		return tmdbAccount.removeFromWatchList(
-				sessionToken, actId, mToRemove.getId(),
-				MediaType.MOVIE);
+				sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
 	}
 
 	/**
@@ -123,9 +122,9 @@ public class MovieDBAccount {
 	 * @return responseStatus The status of the requested action.
 	 */
 	public ResponseStatus addMovieToFavorites(final MovieDb mToAdd) {
+		
 		return tmdbAccount.addFavorite(
-				sessionToken, actId, mToAdd.getId(),
-				MediaType.MOVIE);
+				sessionToken, actId, mToAdd.getId(), MediaType.MOVIE);
 	}
 
 	/**
@@ -134,12 +133,10 @@ public class MovieDBAccount {
 	 * @param mToRemove The movie chosen to be removed.
 	 * @return responseStatus The status of the requested action.
 	 */
-	public ResponseStatus removeMovieFromFavorites(
-			final MovieDb mToRemove) {
+	public ResponseStatus removeMovieFromFavorites(final MovieDb mToRemove) {
 		
 		return tmdbAccount.removeFavorite(
-				sessionToken, actId, mToRemove.getId(),
-				MediaType.MOVIE);
+				sessionToken, actId, mToRemove.getId(), MediaType.MOVIE);
 	}
 
 	/**
@@ -149,6 +146,7 @@ public class MovieDBAccount {
 	 * @return watchList The watch list of the current user.
 	 */
 	public MovieResultsPage getWatchList() {
+		
 		return tmdbAccount.getWatchListMovies(sessionToken, actId, 1);
 	}
 
@@ -159,6 +157,7 @@ public class MovieDBAccount {
 	 * @return favorites The favorites of the current user.
 	 */
 	public MovieResultsPage getFavorites() {
+		
 		return tmdbAccount.getFavoriteMovies(sessionToken, actId);
 	}
 
@@ -172,14 +171,13 @@ public class MovieDBAccount {
 	 *                      session with the movie manager
 	 */
 	private SessionToken getSessionToken(
-			final String username, 
-			final String password) {
-		TmdbAuthentication tmdbAuth = tmdbApi.getAuthentication();
-		TokenSession tokenSession = tmdbAuth.getSessionLogin(
-				username, password);
+			final String username, final String password) {
 		
-		SessionToken sessionToken = new SessionToken(
-				tokenSession.getSessionId());
+		TmdbAuthentication tmdbAuth = tmdbApi.getAuthentication();
+		TokenSession tokenSession = 
+				tmdbAuth.getSessionLogin(username, password);
+		SessionToken sessionToken = 
+				new SessionToken(tokenSession.getSessionId());
 
 		return sessionToken;
 	}
@@ -191,6 +189,7 @@ public class MovieDBAccount {
 	 * @return TmdbApi API for the current user
 	 */
 	public TmdbApi getTmdbApi() {
+		
 		return tmdbApi;
 	}
 }

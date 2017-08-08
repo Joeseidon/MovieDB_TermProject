@@ -23,6 +23,7 @@ import javafx.stage.WindowEvent;
  * @since 2017-07-07
  */
 public class MovieSelection {
+	
 	/**
 	 * Accounts currently selected movie. 
 	 */
@@ -41,32 +42,12 @@ public class MovieSelection {
 	/**
 	 * Base URL used for trailer queries from movie database.
 	 */
-	private final String youTubeBaseURL = 
-			"https://www.youtube.com/watch?v=";
+	private final String youTubeBaseURL = "https://www.youtube.com/watch?v=";
 	
 	/**
 	 * Base URL used for image queries from movie database.
 	 */
 	private final String baseImageURL = "https://image.tmdb.org/t/p/w500";
-
-	/**
-	 * Public constructor used to create a MovieSelection instance. 
-	 * An instance of this class contains a user account and the
-	 * currently selected movie. This constructor is overloaded
-	 * to apply a selected movie on instantiation.
-	 * 
-	 * @param user MovieDBAccount associated with this selection.
-	 * @param selection MovieDb currently selected by the user.
-	 */
-	public MovieSelection(final MovieDBAccount user,
-			final MovieDb selection) {
-		
-		this.setUser(user);
-		
-		selectedMovie = selection;
-		
-		createMoviesObject(this.user.getTmdbApi());
-	}
 
 	/**
 	 * Public constructor used to create a MovieSelection instance.
@@ -76,6 +57,7 @@ public class MovieSelection {
 	 * @param user MovieDBAccount associated with this selection.
 	 */
 	public MovieSelection(final MovieDBAccount user) {
+		
 		this.setUser(user);
 		
 		this.selectedMovie = null;
@@ -90,6 +72,7 @@ public class MovieSelection {
 	 * @return selectedMovie Movie of type MovieDb.
 	 */
 	public MovieDb getSelectedMovie() {
+		
 		return selectedMovie;
 	}
 
@@ -99,6 +82,7 @@ public class MovieSelection {
 	 * @param selected Of type MovieDb.
 	 */
 	public void setSelectedMovie(final MovieDb selected) {
+		
 		this.selectedMovie = selected;
 	}
 
@@ -109,8 +93,9 @@ public class MovieSelection {
 	 * @return trailerURL Of type string
 	 */
 	public String getVidoeURL() {
-		return youTubeBaseURL + movieObj.getVideos(
-				this.getSelectedMovie().getId(), "English")
+		
+		return youTubeBaseURL 
+				+ movieObj.getVideos(this.getSelectedMovie().getId(), "English")
 				.get(0).getKey();
 	}
 
@@ -122,6 +107,7 @@ public class MovieSelection {
 	 * 
 	 */
 	public String getImageURL() {
+		
 		return baseImageURL + this.getSelectedMovie().getPosterPath();
 	}
 
@@ -132,6 +118,7 @@ public class MovieSelection {
 	 * @param webview Media engine in which the trailer will be played.
 	 */
 	public void generateTrailerWindow(final WebView webview) {
+		
 		try {
 			// Media engine used to play trailer
 			webview.getEngine().load(this.getVidoeURL());
@@ -156,35 +143,19 @@ public class MovieSelection {
 			stage.show();
 			
 			// Event handler to cancel play on close
-			stage.setOnCloseRequest(
-					new EventHandler<WindowEvent>() {
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
 				@Override
 				public void handle(final WindowEvent event) {
 					webview.getEngine().load(null);
 				}
 			});
+			
 		} catch (IndexOutOfBoundsException idexEx) {
 			// Video trailer not found
 			JOptionPane.showMessageDialog(
-					null, "There is not a trailer"
-					+ " associated with this movie.");
+					null, "There is not a trailer associated with this movie.");
 		}
-	}
-
-	/**
-	 * This function only provides the first keyword in the
-	 * current selections list of keywords. This may not be
-	 * enough for search. Consider overloading function to
-	 * provide an ArrayList of keywords to expand search.
-	 *
-	 * @param None
-	 * @return keyword The first keyword provided in the list
-	 *                 of keywords provided by the API
-	 */
-	public String getSelectionKeyWord() {
-		return movieObj.getKeywords(
-				this.getSelectedMovie().getId())
-				.get(0).getName().toString();
 	}
 
 	/**
@@ -193,18 +164,8 @@ public class MovieSelection {
 	 * @param apiKey Used to connect the movie object with the user
 	 */
 	private void createMoviesObject(final TmdbApi apiKey) {
+		
 		movieObj = new TmdbMovies(apiKey);
-	}
-
-	/**
-	 * Returns the user to which this movie selection belongs.
-	 * 
-	 * @param None
-	 * @return currentUser The user to which the current
-	 *                     movie selection belongs.
-	 */
-	public MovieDBAccount getUser() {
-		return user;
 	}
 
 	/**
@@ -213,6 +174,7 @@ public class MovieSelection {
 	 * @param user Current user to which selected movies will apply.
 	 */
 	public void setUser(final MovieDBAccount user) {
+		
 		this.user = user;
 	}
 }

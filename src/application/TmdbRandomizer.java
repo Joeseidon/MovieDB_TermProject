@@ -18,6 +18,7 @@ import info.movito.themoviedbapi.model.MovieDb;
  * @since 2017-07-07
  */
 public class TmdbRandomizer {
+	
 	/**
 	 * Current users movie watch list.
 	 */
@@ -51,6 +52,7 @@ public class TmdbRandomizer {
 	 * @param user The account from which this randomizer will draw data.
 	 */
 	public TmdbRandomizer(final MovieDBAccount user) {
+		
 		this.user = user;
 		
 		// Store the users favorites and
@@ -71,6 +73,7 @@ public class TmdbRandomizer {
 	 * @param None
 	 */
 	public void update() {
+		
 		updateFavorites();
 		updateWatchList();
 	}
@@ -85,6 +88,7 @@ public class TmdbRandomizer {
 	 *                                 hasn't been generated.
 	 */
 	public MovieDb getRandomMovie() throws RandomNotFoundException {
+		
 		if (moviePool == null || moviePool.isEmpty()) {
 			// If a movie pool doesn't exits, generate one
 			try {
@@ -100,6 +104,7 @@ public class TmdbRandomizer {
 			throw new RandomNotFoundException(
 					"moviePool is empty. Regenerate Pool");
 		}
+		
 		if (moviePool.isEmpty()) {
 			throw new RandomNotFoundException(
 					"moviePool is empty. Regenerate Pool");
@@ -123,6 +128,7 @@ public class TmdbRandomizer {
 	 * @param None
 	 */
 	public void generatePool() {
+		
 		try {
 			moviePool = createRandomPool();
 		} catch (RandomNotFoundException rd) {
@@ -148,6 +154,7 @@ public class TmdbRandomizer {
 	 * @return MoviePool ArrayList of random movies
 	 */
 	private ArrayList<MovieDb> createPoolWithoutUserData() {
+		
 		List<MovieDb> tmp;
 		
 		ArrayList<MovieDb> pool = new ArrayList<MovieDb>();
@@ -178,22 +185,22 @@ public class TmdbRandomizer {
 	 *                                     cannot be referenced
 	 */
 	private ArrayList<MovieDb> createRandomPool() 
-			throws RandomNotFoundException,
-			DataBaseConnectionException {
+			throws RandomNotFoundException, DataBaseConnectionException {
+		
 		// Containers used to store database
 		// returns and final movie pool
 		List<MovieDb> tmp;
 		ArrayList<MovieDb> pool = new ArrayList<MovieDb>();
+		
 		try {
-			if (movieWatchList != null
-					&& !movieWatchList.isEmpty()) {
+			
+			if (movieWatchList != null && !movieWatchList.isEmpty()) {
 				
 				for (MovieDb i : movieWatchList) {
 					// Retrieve similar movies
 					// for all in watch list
 					tmp = movieObj.getSimilarMovies(
-							i.getId(), "English", 1)
-							.getResults();
+							i.getId(), "English", 1).getResults();
 					
 					// If similar movies are found then
 					// they will be added to the pool
@@ -205,15 +212,13 @@ public class TmdbRandomizer {
 				}
 			}
 
-			if (movieFavorites != null
-					&& !movieFavorites.isEmpty()) {
+			if (movieFavorites != null && !movieFavorites.isEmpty()) {
 				
 				for (MovieDb i : movieFavorites) {
 					// Retrieve similar movies
 					// for all in favorites
 					tmp = movieObj.getSimilarMovies(
-							i.getId(), "English", 1)
-							.getResults();
+							i.getId(), "English", 1).getResults();
 					
 					// If similar movies are found then
 					// they will be added to the pool
@@ -224,16 +229,17 @@ public class TmdbRandomizer {
 					}
 				}
 			}
+			
 		} catch (NullPointerException e) {
 			// Thrown when users database cannot be reached
-			throw new DataBaseConnectionException();
+			throw new DataBaseConnectionException(
+					"Failed to connect to the Movie Data Base");
 		}
 
 		if (pool == null || pool.isEmpty()) {
 			// Thrown when the final pool is empty
 			throw new RandomNotFoundException(
-					"WatchList and Favorites"
-					+ "must be empty.");
+					"WatchList and Favorites can not be empty.");
 		}
 		
 		return pool;
@@ -246,6 +252,7 @@ public class TmdbRandomizer {
 	 * @param None
 	 */
 	private void updateFavorites() {
+		
 		movieFavorites = user.getFavorites().getResults();
 	}
 
@@ -256,6 +263,7 @@ public class TmdbRandomizer {
 	 * @param None
 	 */
 	private void updateWatchList() {
+		
 		movieWatchList = user.getWatchList().getResults();
 	}
 
@@ -266,6 +274,7 @@ public class TmdbRandomizer {
 	 *               the movie object with the API
 	 */
 	private void createMoviesObj(final TmdbApi apiKey) {
+		
 		movieObj = new TmdbMovies(apiKey);
 	}
 }
